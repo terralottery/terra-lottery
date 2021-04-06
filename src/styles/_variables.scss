@@ -1,0 +1,60 @@
+/* Colors */
+$bg: #f8f9fe !default;
+$darkblue: #0c3694 !default;
+$darkblue-hover: #214296 !default;
+$airdrop: #1a314c !default;
+
+$gray: #e7ebf6 !default;
+$brown: #a0a0a0 !default;
+$light: #ffffff !default;
+$slate: #505466 !default;
+
+$blue: #214296 !default;
+$aqua: #214296 !default;
+$red: #e64c57 !default;
+$orange: #dd794a !default;
+
+$text: $darkblue;
+$button: $light !default;
+$header: $light !default;
+$saturated-blue: saturate(darken($darkblue, 2%), 6%);
+
+$colors: (
+  bg: $bg,
+  darkblue: $darkblue,
+  slate: $slate,
+  blue: $blue,
+  aqua: $aqua,
+  red: $red,
+  orange: $orange,
+);
+
+$hr-shadow: fade-out(white, 0.8);
+$hr: fade-out(black, 0.92);
+$border: 1px solid fade-out($slate, 0.8);
+$border-radius: 5px;
+
+/* Fonts */
+$font-size: 16px;
+$font-family: "Gotham";
+
+/* Sizes */
+$max-width: 1200px !default;
+$breakpoint: 992px;
+$gutter: 30px;
+$line-height: 1.5;
+$nav-height: 70px;
+$footer-height: 50px;
+$footer-height-mobile: 100px;
+
+$card-padding-horizontal: 25px;
+$card-padding-header: 20px $card-padding-horizontal;
+$card-padding-main: $card-padding-header;
+
+/* Transitions */
+$transition-duration: 0.2s;
+
+/* Z-indexes */
+$zindex-sticky: 1020;
+
+@import "../customize";

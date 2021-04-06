@@ -1,0 +1,21 @@
+@import "../styles/mixins";
+@import "../styles/variables";
+
+.success {
+  color: $aqua;
+}
+
+.failure {
+  color: $red;
+}
+
+.hash {
+  color: $darkblue;
+  font-size: 12px;
+  text-align: center;
+}
+
+.feedback {
+  text-align: center;
+  margin: 20px 0 40px;
+}

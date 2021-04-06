@@ -1,0 +1,10 @@
+@import "../styles/mixins";
+
+.button {
+  @include flex;
+  @include link($darkblue, $darkblue-hover);
+
+  i {
+    margin-left: 5px;
+  }
+}
