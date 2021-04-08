@@ -1,6 +1,3 @@
-import medium from "./Community/medium.png"
-import discord from "./Community/discord.png"
-import telegram from "./Community/telegram.png"
 import twitter from "./Community/twitter.png"
 import github from "./Community/github.png"
 
@@ -11,33 +8,17 @@ import styles from "./AppFooter.module.scss"
 
 interface Props {
   network?: string
-  project: string
 }
 
-const AppFooter = ({ network, project }: Props) => {
+const AppFooter = ({ network }: Props) => {
   const community = [
     {
-      href: `https://github.com/Mirror-Protocol/${project}`,
+      href: `https://github.com/terralottery/terra-lottery`,
       src: github,
       alt: "Github",
     },
     {
-      href: "https://medium.com/@mirror-protocol",
-      src: medium,
-      alt: "Medium",
-    },
-    {
-      href: "https://t.me/mirror_protocol",
-      src: telegram,
-      alt: "Telegram",
-    },
-    {
-      href: "https://discord.gg/KYC22sngFn",
-      src: discord,
-      alt: "Discord",
-    },
-    {
-      href: "https://twitter.com/mirror_protocol",
+      href: "https://twitter.com/terra_lottery",
       src: twitter,
       alt: "Twitter",
     },

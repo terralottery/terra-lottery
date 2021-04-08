@@ -3,7 +3,7 @@ import AppFooter from "../components/AppFooter"
 
 const Footer = () => {
   const { name } = useNetwork()
-  return <AppFooter network={name} project="mirror-web-app" />
+  return <AppFooter network={name} />
 }
 
 export default Footer

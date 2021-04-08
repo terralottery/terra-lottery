@@ -2,7 +2,7 @@ import { FC, useState } from "react"
 import ReactModal from "react-modal"
 import styles from "./Modal.module.scss"
 
-ReactModal.setAppElement("#mirror")
+ReactModal.setAppElement("#terralottery")
 
 const Modal: FC<Modal> = ({ isOpen, close, children }) => (
   <ReactModal

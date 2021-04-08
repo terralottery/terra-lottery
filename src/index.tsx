@@ -29,5 +29,5 @@ render(
       </Contract>
     </Network>
   </StrictMode>,
-  document.getElementById("mirror")
+  document.getElementById("terralottery")
 )
