@@ -34,4 +34,4 @@ export const TRADING_HOURS =
 
 /* sentry */
 export const DSN =
-  "https://b1532961e54e491fbb57e67805cb36a4@o247107.ingest.sentry.io/5540998"
+  "https://02aaefc8ecf04f2c9145ba2c78d0326f@o567291.ingest.sentry.io/5711071"
