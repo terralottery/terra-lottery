@@ -44,21 +44,17 @@ export function getNextDraw(lottery: string) {
 
 export function Countdown(end: any) {
   const [remaining, setRemaining] = useState(getRemaining(end.end))
-  const timer: any = setInterval(function () {
-    setRemaining(getRemaining(end.end))
-  }, 1000)
-
-  const checkRemaining = () => {
-    setRemaining({ days: 0, hours: 0, minutes: 0, seconds: 0 })
-    clearInterval(timer)
-  }
 
   useEffect(() => {
-    checkRemaining()
     return () => {
       setRemaining({ days: 0, hours: 0, minutes: 0, seconds: 0 })
     }
   }, [])
+
+  setInterval(function () {
+    setRemaining(getRemaining(end.end))
+  }, 1000)
+
   return (
     <>{`${remaining.days}d ${remaining.hours}h ${remaining.minutes}m ${remaining.seconds}s`}</>
   )
