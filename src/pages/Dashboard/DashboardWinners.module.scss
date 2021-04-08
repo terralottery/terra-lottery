@@ -1,0 +1,12 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.link {
+  @include flex;
+  @include link($darkblue, $darkblue-hover);
+  justify-content: flex-start;
+
+  i {
+    font-size: 14px;
+  }
+}
