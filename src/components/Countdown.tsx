@@ -46,14 +46,14 @@ export function Countdown(end: any) {
   const [remaining, setRemaining] = useState(getRemaining(end.end))
 
   useEffect(() => {
-    return () => {
-      setRemaining({ days: 0, hours: 0, minutes: 0, seconds: 0 })
-    }
-  }, [])
+    const interval = setInterval(function () {
+      setRemaining(getRemaining(end.end))
+    }, 1000)
 
-  setInterval(function () {
-    setRemaining(getRemaining(end.end))
-  }, 1000)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [end])
 
   return (
     <>{`${remaining.days}d ${remaining.hours}h ${remaining.minutes}m ${remaining.seconds}s`}</>
