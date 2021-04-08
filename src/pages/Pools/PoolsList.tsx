@@ -13,10 +13,10 @@ import LoadingTitle from "../../components/LoadingTitle"
 import CountWithResult from "../../containers/CountWithResult"
 import usePool from "../../forms/usePool"
 
-import StakeListTitle from "./StakeListTitle"
-import styles from "./StakeList.module.scss"
+import PoolsListTitle from "./PoolsListTitle"
+import styles from "./PoolsList.module.scss"
 
-const StakeList = () => {
+const PoolsList = () => {
   const keys = [BalanceKey.LPSTAKED, BalanceKey.LPSTAKABLE]
   const { url } = useRouteMatch()
   const { loading } = useRefetch(keys)
@@ -60,7 +60,7 @@ const StakeList = () => {
   return (
     <article>
       <LoadingTitle className={styles.encourage} loading={loading}>
-        <StakeListTitle />
+        <PoolsListTitle />
       </LoadingTitle>
 
       <Grid wrap={3}>
@@ -79,4 +79,4 @@ const StakeList = () => {
   )
 }
 
-export default StakeList
+export default PoolsList

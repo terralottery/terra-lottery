@@ -8,12 +8,9 @@ import Change from "../components/Change"
 import styles from "./ChartContainer.module.scss"
 
 /* styles */
-const $font = "Poppins"
-const $darkblue = "#172240"
-const $aqua = "#47d7e2"
-const $red = "#e64c57"
+const $font = "Gotham, sans-serif"
+const $darkblue = "#0c3694"
 const $slate = "#505466"
-const $text = "#cccccc"
 const $line = helpers.color($slate).alpha(0.2).rgbString()
 
 defaults.global.defaultFontColor = $slate
@@ -31,8 +28,7 @@ interface Props {
 const ChartContainer = ({ value, change, datasets, ...props }: Props) => {
   const { fmt, compact, bar } = props
 
-  const borderColor =
-    (change && (gt(change, 0) ? $aqua : lt(change, 0) && $red)) || $text
+  const borderColor = $darkblue
 
   const height = compact ? 120 : 240
 
@@ -42,7 +38,7 @@ const ChartContainer = ({ value, change, datasets, ...props }: Props) => {
         fill: false,
         borderColor,
         borderCapStyle: "round",
-        borderWidth: compact ? 2 : 6,
+        borderWidth: 2,
         lineTension: compact ? 0.2 : 0.05,
         pointRadius: 0,
         pointHoverRadius: 0,

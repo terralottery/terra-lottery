@@ -10,10 +10,7 @@ interface Props {
 const Alert: FC<Props> = ({ isOpen, onClose, children }) =>
   !isOpen ? null : (
     <div className={styles.component}>
-      <section className={styles.main}>
-        <Icon name="info" size={16} />
-        {children}
-      </section>
+      <section className={styles.main}>{children}</section>
 
       <button className={styles.close} onClick={onClose}>
         <Icon name="close" size={16} />

@@ -3,13 +3,13 @@ import { minus, sum } from "../../libs/math"
 import { useRefetch } from "../../hooks"
 import { AccountInfoKey } from "../../hooks/contractKeys"
 import { DataKey, useContract } from "../../hooks/useContract"
-import useMyStake from "./useMyStake"
+import useMyPools from "./useMyPools"
 
 const useMy = () => {
-  const stake = useMyStake()
+  const pools = useMyPools()
 
   const keys = uniq(
-    [stake].reduce<DataKey[]>((acc, { keys }) => [...acc, ...keys], [])
+    [pools].reduce<DataKey[]>((acc, { keys }) => [...acc, ...keys], [])
   )
 
   const { data } = useRefetch([...keys, AccountInfoKey.UUSD])
@@ -18,12 +18,12 @@ const useMy = () => {
   const { uusd } = useContract()
   const values = {
     uusd,
-    reward: stake.totalRewardsValue,
+    reward: pools.totalRewardsValue,
   }
 
   const total = { value: calcTotalValue(values), loading: !data }
 
-  return { stake, total }
+  return { pools, total }
 }
 
 export default useMy

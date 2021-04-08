@@ -10,7 +10,7 @@ interface Item extends ListedItem {
   gov?: boolean
 }
 
-const useMyStake = () => {
+const useMyPools = () => {
   const priceKey = PriceKey.PAIR
   const keys = [
     priceKey,
@@ -74,4 +74,4 @@ const useMyStake = () => {
   }
 }
 
-export default useMyStake
+export default useMyPools

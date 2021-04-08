@@ -1,0 +1,17 @@
+@import "../styles/mixins";
+@import "../styles/variables";
+
+.title {
+  color: $darkblue;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.content {
+  color: $darkblue;
+  font-size: 14px;
+}
+
+.wrapper {
+  margin: 15px 0 0;
+}

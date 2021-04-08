@@ -7,11 +7,11 @@ import ConnectionRequired from "../../containers/ConnectionRequired"
 import useMy from "./useMy"
 import Header from "./Header"
 import TotalValue from "./TotalValue"
-import Stake from "./Stake"
+import Pools from "./Pools"
 
 const My = () => {
   const { address, disconnect } = useWallet()
-  const { stake, total } = useMy()
+  const { pools, total } = useMy()
 
   const header = {
     total: <TotalValue {...total} />,
@@ -19,9 +19,9 @@ const My = () => {
 
   const contents = [
     {
-      key: "stake",
-      dataSource: stake.dataSource,
-      component: <Stake {...stake} />,
+      key: "pools",
+      dataSource: pools.dataSource,
+      component: <Pools {...pools} />,
     },
   ]
 

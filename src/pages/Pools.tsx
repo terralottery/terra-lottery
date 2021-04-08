@@ -1,21 +1,21 @@
 import { RouteProps, useRouteMatch } from "react-router-dom"
 import routes from "../routes"
-import Claim from "./Stake/Claim"
-import StakeDetails from "./Stake/StakeDetails"
-import StakeHome from "./Stake/StakeHome"
+import Claim from "./Pools/Claim"
+import PoolsDetails from "./Pools/PoolsDetails"
+import PoolsHome from "./Pools/PoolsHome"
 
 export enum MenuKey {
   INDEX = "Prize Pools",
-  CLAIMALL = "Claim your Rewards",
+  CLAIMALL = "Claim all",
   CLAIMSYMBOL = "Claim",
   DETAILS = "Prize Pool Details",
 }
 
 export const menu: Record<MenuKey, RouteProps> = {
-  [MenuKey.INDEX]: { path: "/", exact: true, component: StakeHome },
+  [MenuKey.INDEX]: { path: "/", exact: true, component: PoolsHome },
   [MenuKey.CLAIMALL]: { path: "/claim", component: Claim },
   [MenuKey.CLAIMSYMBOL]: { path: "/:token/claim", component: Claim },
-  [MenuKey.DETAILS]: { path: "/:token", component: StakeDetails },
+  [MenuKey.DETAILS]: { path: "/:token", component: PoolsDetails },
 }
 
 export enum Type {

@@ -6,7 +6,7 @@ import StakeDetailsHeader from "../../components/StakeDetailsHeader"
 import StakeForm from "../../forms/StakeForm"
 import { Type } from "../Pools"
 
-const StakeDetails = () => {
+const PoolsDetails = () => {
   const { token } = useParams<{ token: string }>()
   const { hash: type } = useHash<Type>(Type.STAKE)
   const { getSymbol } = useContractsAddress()
@@ -19,4 +19,4 @@ const StakeDetails = () => {
   )
 }
 
-export default StakeDetails
+export default PoolsDetails

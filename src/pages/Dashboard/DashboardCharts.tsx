@@ -2,7 +2,6 @@ import { last } from "ramda"
 import { UUSD } from "../../constants"
 import Tooltip from "../../lang/Tooltip.json"
 import { lookup } from "../../libs/parse"
-import { calcChange } from "../../statistics/useYesterday"
 import Grid from "../../components/Grid"
 import Card from "../../components/Card"
 import Summary from "../../components/Summary"
@@ -11,16 +10,14 @@ import ChartContainer from "../../containers/ChartContainer"
 import { TooltipIcon } from "../../components/Tooltip"
 
 const DashboardCharts = (props: Partial<Dashboard>) => {
-  const { latest24h, liquidityHistory, tradingVolumeHistory } = props
+  const { liquidityHistory } = props
 
   return (
     <Grid wrap={2}>
       <Card>
         <Summary
           title={
-            <TooltipIcon content={Tooltip.Chart.Liquidity}>
-              Liquidity
-            </TooltipIcon>
+            <TooltipIcon content={Tooltip.Chart.Tickets}>Tickets</TooltipIcon>
           }
         >
           <ChartContainer
@@ -28,15 +25,6 @@ const DashboardCharts = (props: Partial<Dashboard>) => {
               <Count symbol={UUSD} integer>
                 {liquidityHistory ? last(liquidityHistory)?.value : "0"}
               </Count>
-            }
-            change={
-              liquidityHistory && liquidityHistory.length >= 2
-                ? calcChange({
-                    yesterday:
-                      liquidityHistory[liquidityHistory.length - 2]?.value,
-                    today: liquidityHistory[liquidityHistory.length - 1]?.value,
-                  })
-                : undefined
             }
             datasets={
               liquidityHistory ? toDatasets(liquidityHistory, UUSD) : []
@@ -48,17 +36,19 @@ const DashboardCharts = (props: Partial<Dashboard>) => {
       <Card>
         <Summary
           title={
-            <TooltipIcon content={Tooltip.Chart.Volume}>Volume</TooltipIcon>
+            <TooltipIcon content={Tooltip.Chart.Participants}>
+              Total participating Wallets
+            </TooltipIcon>
           }
         >
           <ChartContainer
             value={
-              <Count symbol={UUSD} integer>
-                {latest24h?.volume}
+              <Count symbol="Wallets" integer>
+                {liquidityHistory ? last(liquidityHistory)?.value : "0"}
               </Count>
             }
             datasets={
-              tradingVolumeHistory ? toDatasets(tradingVolumeHistory, UUSD) : []
+              liquidityHistory ? toDatasets(liquidityHistory, "Wallets") : []
             }
             bar
           />

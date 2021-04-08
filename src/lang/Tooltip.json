@@ -2,15 +2,14 @@
   "Dashboard": {
     "Tickets": "Total Number of participating tickets",
     "Fee": "Value of trading fee paid in the last 24 hours",
-    "MarketCap": "Total value of all minted assets",
-    "TVL": "Total value of collateral, liquidity and staked MIR",
-    "TVLETH": "Total value of liquidity",
-    "CollateralRatio": "Ratio of the total collateral value to the total minted asset value",
-    "CommunityPoolBalance": "Total number of MIR tokens currently in the community pool"
+    "APY": "Current anual interest earned on Lottery Tickets",
+    "sevenDay": "Current Jackpot of the 7 day Lottery Prize Pool",
+    "fourteenDay": "Current Jackpot of the 14 day Lottery Prize Pool",
+    "twentyOneDay": "Current Jackpot of the 21 day Lottery Prize Pool"
   },
   "Chart": {
-    "Liquidity": "Total value of all mAssets and UST in liquidity pools",
-    "Volume": "Total value of all assets traded in the last 24 hours. The chart data is accumulated on daily basis."
+    "Tickets": "Total amount of participating tickets",
+    "Participants": "Total amount of participating wallets"
   },
   "TopTrading": {
     "Liquidity": "Current liquidity value of the mAsset and UST in the pool",
@@ -98,12 +97,10 @@
     "PoolShare": "Ratio of the liquidity provided to the total liquidity provided post-transaction",
     "LPfromTx": "Quantity of LP tokens to be received"
   },
-  "Stake": {
-    "MIRprice": "Terraswap price of MIR that is determined by the current pool ratio",
-    "MIRvolume": "Total value of MIR traded in the last 24 hours",
-    "Title": "LP tokens can be staked to earn MIR as rewards. LP tokens are obtained by providing asset liquidity.",
-    "APR": "Annualized LP staking return based on the MIR distribution, LP staking ratio, and pool value",
-    "TotalStaked": "Quantity of LP tokens staked for the corresponding asset liquidity pool"
+  "Lottery": {
+    "Title": "If you stake your UST into a Prize Pool, you'll get Tickets in return.",
+    "Tickets": "Tickets earn interest in UST. 50% of this interest goes directly to you. The other 50% goes into the Prize Pool.",
+    "Jackpot": "You have a chance of winning the Prize Pool, by having Tickets"
   },
   "Gov": {
     "TotalStaked": "Total quantity of MIR tokens staked",

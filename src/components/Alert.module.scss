@@ -6,7 +6,8 @@
   background: fade-out($blue, 0.92);
   border: 1px solid $blue;
   border-radius: $border-radius;
-  padding: 20px;
+  padding: 10px;
+  align-items: flex-start;
   margin-top: $gutter;
 
   @include desktop {

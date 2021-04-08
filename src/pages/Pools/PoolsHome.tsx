@@ -5,10 +5,9 @@ import { BalanceKey } from "../../hooks/contractKeys"
 import Page from "../../components/Page"
 import LinkButton from "../../components/LinkButton"
 import { menu, MenuKey } from "../Pools"
-import StakeHomeHeader from "./StakeHomeHeader"
-import StakeList from "./StakeList"
+import PoolsList from "./PoolsList"
 
-const StakeHome = () => {
+const PoolsHome = () => {
   const { url } = useRouteMatch()
   const { rewards } = useContract()
   useRefetch([BalanceKey.REWARD, BalanceKey.LPSTAKED])
@@ -23,13 +22,12 @@ const StakeHome = () => {
   return (
     <Page
       title={MenuKey.INDEX}
-      description={<StakeHomeHeader />}
       doc="/user-guide/getting-started/stake"
       action={<LinkButton {...link} />}
     >
-      <StakeList />
+      <PoolsList />
     </Page>
   )
 }
 
-export default StakeHome
+export default PoolsHome

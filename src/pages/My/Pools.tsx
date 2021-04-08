@@ -1,6 +1,5 @@
 import { UUSD } from "../../constants"
 import MESSAGE from "../../lang/MESSAGE.json"
-import Tooltip from "../../lang/Tooltip.json"
 import { gt } from "../../libs/math"
 import { formatAsset } from "../../libs/parse"
 import { getPath, MenuKey } from "../../routes"
@@ -8,8 +7,7 @@ import { getPath, MenuKey } from "../../routes"
 import Card from "../../components/Card"
 import Dl from "../../components/Dl"
 import LinkButton from "../../components/LinkButton"
-import { TooltipIcon } from "../../components/Tooltip"
-import { menu as stakeMenu, MenuKey as StakeMenuKey } from "../Pools"
+import { menu as poolsMenu, MenuKey as PoolsMenuKey } from "../Pools"
 import NoAssets from "./NoAssets"
 
 interface Data extends ListedItem {
@@ -27,13 +25,13 @@ interface Props {
   dataSource: Data[]
 }
 
-const Stake = ({ loading, dataSource, ...props }: Props) => {
+const Pools = ({ loading, dataSource, ...props }: Props) => {
   const { totalRewards, totalRewardsValue } = props
 
   const claimAll = {
-    to: getPath(MenuKey.POOLS) + stakeMenu[StakeMenuKey.CLAIMALL].path,
+    to: getPath(MenuKey.POOLS) + poolsMenu[PoolsMenuKey.CLAIMALL].path,
     className: "desktop",
-    children: StakeMenuKey.CLAIMALL,
+    children: PoolsMenuKey.CLAIMALL,
     disabled: !gt(totalRewards, 0),
     color: "aqua",
     size: "sm" as const,
@@ -45,7 +43,15 @@ const Stake = ({ loading, dataSource, ...props }: Props) => {
     <Dl
       list={[
         {
-          title: "Total Staking Rewards:",
+          title: "Current Tickets:",
+          content: formatAsset(totalRewardsValue, "Tickets"),
+        },
+        {
+          title: "Total earned interest:",
+          content: formatAsset(totalRewardsValue, UUSD),
+        },
+        {
+          title: "Total Lottery Winnings:",
           content: formatAsset(totalRewardsValue, UUSD),
         },
       ]}
@@ -67,4 +73,4 @@ const Stake = ({ loading, dataSource, ...props }: Props) => {
   )
 }
 
-export default Stake
+export default Pools

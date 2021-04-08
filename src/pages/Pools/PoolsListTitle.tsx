@@ -1,30 +1,30 @@
 import Tooltip from "../../lang/Tooltip.json"
 import { TooltipIcon } from "../../components/Tooltip"
 
-const StakeListTitle = () => {
+const PoolsListTitle = () => {
   const tooltip = (
     <section>
       <article>
-        <p>{Tooltip.Stake.Title}</p>
+        <p>{Tooltip.Lottery.Title}</p>
       </article>
 
       <article>
-        <h1>APR</h1>
-        <p>{Tooltip.Stake.APR}</p>
+        <h1>Tickets</h1>
+        <p>{Tooltip.Lottery.Tickets}</p>
       </article>
 
       <article>
-        <h1>Total Staked</h1>
-        <p>{Tooltip.Stake.TotalStaked}</p>
+        <h1>Jackpot</h1>
+        <p>{Tooltip.Lottery.Jackpot}</p>
       </article>
     </section>
   )
 
   return (
     <TooltipIcon content={tooltip}>
-      <p>Earn MIR tokens by staking LP Tokens!</p>
+      <p>Earn UST by playing the Lottery!</p>
     </TooltipIcon>
   )
 }
 
-export default StakeListTitle
+export default PoolsListTitle
