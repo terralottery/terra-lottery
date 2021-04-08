@@ -43,10 +43,6 @@ const Pools = ({ loading, dataSource, ...props }: Props) => {
     <Dl
       list={[
         {
-          title: "Current Tickets:",
-          content: formatAsset(totalRewardsValue, "Tickets"),
-        },
-        {
           title: "Total earned interest:",
           content: formatAsset(totalRewardsValue, UUSD),
         },
@@ -60,7 +56,7 @@ const Pools = ({ loading, dataSource, ...props }: Props) => {
 
   return (
     <Card
-      title="Your Lottery Overview"
+      title="Your Lottery Earnings"
       action={!loading && <LinkButton {...claimAll} />}
       description={description}
       loading={loading}
