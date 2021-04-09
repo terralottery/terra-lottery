@@ -2,7 +2,7 @@ import { Switch, Route, RouteProps, Redirect } from "react-router-dom"
 import { Dictionary } from "ramda"
 
 import Dashboard from "./pages/Dashboard"
-import Info from "./pages/Info"
+import Info from "./pages/Info/Info"
 import Auth from "./pages/Auth"
 import My from "./pages/My/My"
 import Send from "./pages/Send"
@@ -12,28 +12,23 @@ import Tool from "./tools/Tool"
 
 export enum MenuKey {
   DASHBOARD = "Dashboard",
-  INFO = "Info",
+  INFO = "How It Works",
   AUTH = "Auth",
   MY = "My Account",
   SEND = "Send",
   POOLS = "Prize Pools",
 }
 
-export const omit = [
-  MenuKey.DASHBOARD,
-  MenuKey.AUTH,
-  MenuKey.INFO,
-  MenuKey.SEND,
-]
+export const omit = [MenuKey.DASHBOARD, MenuKey.AUTH, MenuKey.SEND]
 
 export const menu: Dictionary<RouteProps> = {
   // Not included in navigation bar
   [MenuKey.DASHBOARD]: { path: "/", exact: true, component: Dashboard },
   [MenuKey.AUTH]: { path: "/auth", component: Auth },
-  [MenuKey.INFO]: { path: "/info", component: Info },
   [MenuKey.SEND]: { path: "/send", component: Send },
 
   // Menu
+  [MenuKey.INFO]: { path: "/info", component: Info },
   [MenuKey.MY]: { path: "/my", component: My },
   [MenuKey.POOLS]: { path: "/pools", component: Pools },
 
