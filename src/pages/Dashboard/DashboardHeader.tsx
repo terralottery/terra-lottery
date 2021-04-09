@@ -12,17 +12,41 @@ import Count from "../../components/Count"
 import { TooltipIcon } from "../../components/Tooltip"
 import { Countdown, getNextDraw } from "../../components/Countdown"
 import Legend from "../../components/Legend"
+import { useMemo } from "react"
+import { useInterest } from "../../graphql/queries/interest"
+import type { Rate } from "@anchor-protocol/types"
+import { moneyMarket } from "@anchor-protocol/types"
+import big, { Big } from "big.js"
+import { useConstants } from "../../contexts/contants"
 
 interface Props extends Partial<Dashboard> {
   network: StatsNetwork
 }
 
+export function currentAPY(
+  epochState: moneyMarket.overseer.EpochStateResponse | undefined,
+  blocksPerYear: number
+): Rate<Big> {
+  return big(epochState?.deposit_rate ?? "0").mul(blocksPerYear) as Rate<Big>
+}
+
 const DashboardHeader = ({ network, ...props }: Props) => {
+  const { blocksPerYear } = useConstants()
   const { latest24h, totalValueLocked } = props
   const sevenDayEnd = getNextDraw("7d")
   const fourteenDayEnd = getNextDraw("14d")
   const twentyOneDayEnd = getNextDraw("21d")
-  const currentApy = "0.1053"
+  const {
+    data: { marketStatus },
+  } = useInterest()
+
+  const apy = useMemo(() => currentAPY(marketStatus, blocksPerYear), [
+    blocksPerYear,
+    marketStatus,
+  ])
+
+  const ticketApy = Number(big(apy).toFixed()) / 2
+
   useRefetch([PriceKey.PAIR])
 
   return (
@@ -47,11 +71,13 @@ const DashboardHeader = ({ network, ...props }: Props) => {
           <Summary
             title={
               <TooltipIcon content={Tooltip.Dashboard.APY}>
-                Lottery Tickets APY
+                Current Tickets APY
               </TooltipIcon>
             }
           >
-            <Count format={(value) => percent(value, 2)}>{currentApy}</Count>
+            <Count format={(value) => percent(value, 2)}>
+              {String(ticketApy)}
+            </Count>
           </Summary>
         </Card>
 
@@ -59,7 +85,7 @@ const DashboardHeader = ({ network, ...props }: Props) => {
           <Summary
             title={
               <TooltipIcon content={Tooltip.Dashboard.sevenDay}>
-                7d Lottery Jackpot
+                UST - 7d Lottery Jackpot
               </TooltipIcon>
             }
           >
@@ -76,7 +102,7 @@ const DashboardHeader = ({ network, ...props }: Props) => {
           <Summary
             title={
               <TooltipIcon content={Tooltip.Dashboard.fourteenDay}>
-                14d Lottery Jackpot
+                UST - 14d Lottery Jackpot
               </TooltipIcon>
             }
           >
@@ -93,7 +119,7 @@ const DashboardHeader = ({ network, ...props }: Props) => {
           <Summary
             title={
               <TooltipIcon content={Tooltip.Dashboard.twentyOneDay}>
-                21d Lottery Jackpot
+                UST - 21d Lottery Jackpot
               </TooltipIcon>
             }
           >

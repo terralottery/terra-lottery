@@ -20,7 +20,6 @@ const My = () => {
   const contents = [
     {
       key: "pools",
-      dataSource: pools.dataSource,
       component: <Pools {...pools} />,
     },
   ]
@@ -35,10 +34,9 @@ const My = () => {
             <Header {...header} />
           </Grid>
 
-          {contents.map(
-            ({ dataSource, component, key }) =>
-              !!dataSource.length && <Grid key={key}>{component}</Grid>
-          )}
+          {contents.map(({ component, key }) => (
+            <Grid key={key}>{component}</Grid>
+          ))}
           {disconnect && (
             <Button
               className="mobile"

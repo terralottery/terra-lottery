@@ -8,86 +8,88 @@ import ExtLink from "../../components/ExtLink"
 import { truncate } from "../../libs/text"
 import { formatAsset } from "../../libs/parse"
 import styles from "./DashboardWinners.module.scss"
+import { useWallet } from "../../hooks"
 
 const DashboardWinners = () => {
+  const { address } = useWallet()
   const winners = [
     {
-      address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdam0cv56",
+      address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdamxyz1",
       date: 1617896079,
-      lottery: "7d Lottery",
-      jackpot: "15123343000",
+      lottery: "UST - 7 days Lottery",
+      jackpot: "6583343000",
     },
     {
       address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdam0cv56",
       date: 1617896079,
-      lottery: "7d Lottery",
+      lottery: "UST - 7 days Lottery",
+      jackpot: "5967343000",
+    },
+    {
+      address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdam8Ocv",
+      date: 1617896079,
+      lottery: "UST - 14 days Lottery",
       jackpot: "15123343000",
+    },
+    {
+      address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdamfDe2",
+      date: 1617896079,
+      lottery: "UST - 7 days Lottery",
+      jackpot: "4232333000",
     },
     {
       address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdam0cv56",
       date: 1617896079,
-      lottery: "7d Lottery",
-      jackpot: "15123343000",
+      lottery: "UST - 21 days Lottery",
+      jackpot: "28496343000",
+    },
+    {
+      address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdam1dsc",
+      date: 1617896079,
+      lottery: "UST - 7 days Lottery",
+      jackpot: "6275943000",
+    },
+    {
+      address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdamla91",
+      date: 1617896079,
+      lottery: "UST - 14 days Lottery",
+      jackpot: "13845343000",
     },
     {
       address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdam0cv56",
       date: 1617896079,
-      lottery: "7d Lottery",
-      jackpot: "15123343000",
+      lottery: "UST - 7 days Lottery",
+      jackpot: "4256343000",
+    },
+    {
+      address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdamid03",
+      date: 1617896079,
+      lottery: "UST - 7 days Lottery",
+      jackpot: "3714343000",
     },
     {
       address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdam0cv56",
       date: 1617896079,
-      lottery: "7d Lottery",
-      jackpot: "15123343000",
+      lottery: "UST - 14 days Lottery",
+      jackpot: "9617343000",
     },
     {
       address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdam0cv56",
       date: 1617896079,
-      lottery: "7d Lottery",
-      jackpot: "15123343000",
+      lottery: "UST - 21 days Lottery",
+      jackpot: "19835343000",
     },
     {
       address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdam0cv56",
       date: 1617896079,
-      lottery: "7d Lottery",
-      jackpot: "15123343000",
+      lottery: "UST - 7 days Lottery",
+      jackpot: "1153343000",
     },
     {
       address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdam0cv56",
       date: 1617896079,
-      lottery: "7d Lottery",
-      jackpot: "15123343000",
-    },
-    {
-      address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdam0cv56",
-      date: 1617896079,
-      lottery: "7d Lottery",
-      jackpot: "15123343000",
-    },
-    {
-      address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdam0cv56",
-      date: 1617896079,
-      lottery: "7d Lottery",
-      jackpot: "15123343000",
-    },
-    {
-      address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdam0cv56",
-      date: 1617896079,
-      lottery: "7d Lottery",
-      jackpot: "15123343000",
-    },
-    {
-      address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdam0cv56",
-      date: 1617896079,
-      lottery: "7d Lottery",
-      jackpot: "15123343000",
-    },
-    {
-      address: "terra1u48kjlf2n0s77v0yhkmle58rdqgrqmdam0cv56",
-      date: 1617896079,
-      lottery: "7d Lottery",
-      jackpot: "15123343000",
+      lottery: "UST - 7 days Lottery",
+      jackpot: "186343000",
     },
   ]
 
@@ -102,10 +104,14 @@ const DashboardWinners = () => {
               title: "Wallet Address",
               render: (value) => {
                 const link = `https://finder.terra.money/columbus-4/account/${value}`
+                const classes =
+                  value.toLowerCase() === address.toLowerCase()
+                    ? `${styles.link} ${styles.active}`
+                    : styles.link
                 return (
-                  <ExtLink href={link} className={styles.link}>
-                    <Icon name="launch" />
+                  <ExtLink href={link} className={classes}>
                     {truncate(value)}
+                    <Icon name="launch" />
                   </ExtLink>
                 )
               },

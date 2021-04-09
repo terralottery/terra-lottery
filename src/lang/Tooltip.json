@@ -2,7 +2,7 @@
   "Dashboard": {
     "Tickets": "Total Number of participating tickets",
     "Fee": "Value of trading fee paid in the last 24 hours",
-    "APY": "Current anual interest earned on Lottery Tickets",
+    "APY": "Current anual interest earned on UST Lottery Tickets",
     "sevenDay": "Current Jackpot of the 7 day Lottery Prize Pool",
     "fourteenDay": "Current Jackpot of the 14 day Lottery Prize Pool",
     "twentyOneDay": "Current Jackpot of the 21 day Lottery Prize Pool"

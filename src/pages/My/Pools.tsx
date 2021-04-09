@@ -10,23 +10,15 @@ import LinkButton from "../../components/LinkButton"
 import { menu as poolsMenu, MenuKey as PoolsMenuKey } from "../Pools"
 import NoAssets from "./NoAssets"
 
-interface Data extends ListedItem {
-  apr?: string
-  staked: string
-  stakable: string
-  reward?: string
-  gov?: boolean
-}
-
 interface Props {
-  loading: boolean
   totalRewards: string
-  totalRewardsValue: string
-  dataSource: Data[]
+  totalWinnings: string
+  dataSource: string[]
+  loading: boolean
 }
 
 const Pools = ({ loading, dataSource, ...props }: Props) => {
-  const { totalRewards, totalRewardsValue } = props
+  const { totalRewards, totalWinnings } = props
 
   const claimAll = {
     to: getPath(MenuKey.POOLS) + poolsMenu[PoolsMenuKey.CLAIMALL].path,
@@ -44,11 +36,11 @@ const Pools = ({ loading, dataSource, ...props }: Props) => {
       list={[
         {
           title: "Total earned interest:",
-          content: formatAsset(totalRewardsValue, UUSD),
+          content: formatAsset(totalRewards, UUSD),
         },
         {
           title: "Total Lottery Winnings:",
-          content: formatAsset(totalRewardsValue, UUSD),
+          content: formatAsset(totalWinnings, UUSD),
         },
       ]}
     />
