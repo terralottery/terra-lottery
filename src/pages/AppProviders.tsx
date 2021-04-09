@@ -8,7 +8,7 @@ import { BrowserRouter as Router } from "react-router-dom"
 import { ContractAddress, Rate, uUST } from "@anchor-protocol/types"
 import { OperationBroadcaster } from "@terra-dev/broadcastable-operation"
 import { captureException } from "@sentry/react"
-import { ConstantsProvider } from "../contexts/contants"
+import { Constants, ConstantsProvider } from "../contexts/contants"
 import { ContractProvider, createContractAddress } from "../contexts/contract"
 import {
   ApolloClient,
@@ -88,12 +88,15 @@ function Providers({ children }: { children: ReactNode }) {
     })
   }, [])
 
-  const constants = {
-    gasFee: 1000000 as uUST<number>,
-    fixedGas: 250000 as uUST<number>,
-    blocksPerYear: 4906443,
-    gasAdjustment: 1.6 as Rate<number>,
-  }
+  const constants = useMemo<Constants>(() => {
+    return {
+      gasFee: 1000000 as uUST<number>,
+      fixedGas: 250000 as uUST<number>,
+      blocksPerYear: 4906443,
+      gasAdjustment: 1.6 as Rate<number>,
+    }
+  }, [])
+
   const operationGlobalDependency = useMemo<GlobalDependency>(
     () => ({
       addressProvider,

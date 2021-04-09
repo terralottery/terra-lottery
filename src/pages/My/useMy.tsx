@@ -1,9 +1,4 @@
-import { uniq } from "ramda"
 import { minus, sum } from "../../libs/math"
-import { useRefetch } from "../../hooks"
-import { AccountInfoKey } from "../../hooks/contractKeys"
-import { DataKey } from "../../hooks/useContract"
-import useMyPools from "./useMyPools"
 import { useDeposit } from "../../graphql/queries/totalDeposit"
 import { useMemo } from "react"
 import type { uaUST, uUST } from "@anchor-protocol/types"
@@ -34,7 +29,7 @@ const useMy = () => {
     [aUSTBalance, exchangeRate]
   )
 
-  const aust = big(totalDeposit).toFixed()
+  const aust = big(totalDeposit).toFixed() ?? "0"
 
   //current UST balance
   //const { uusd } = useContract()
@@ -49,6 +44,7 @@ const useMy = () => {
     dataSource: ["achor"],
     totalRewards: interestEarned ?? "0",
     totalWinnings: "0",
+    totalTickets: aust,
     loading: !interestEarned,
   }
 

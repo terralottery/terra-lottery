@@ -73,12 +73,14 @@ export function useEventBus(): EventBus {
 
 export function useEventBusListener(eventType: string, listener: () => void) {
   const eventBus = useContext(EventBusContext)
-  const on =
-    typeof eventBus === "undefined"
+
+  const on = useMemo<any>(() => {
+    return typeof eventBus === "undefined"
       ? (eventType: any) => {
           return false
         }
       : eventBus.on
+  }, [eventBus])
 
   const listenerRef = useRef(listener)
 

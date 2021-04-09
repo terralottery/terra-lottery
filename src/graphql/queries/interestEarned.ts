@@ -1,10 +1,4 @@
-import type {
-  DateTime,
-  HumanAddr,
-  JSDateTime,
-  Rate,
-  uUST,
-} from "@anchor-protocol/types"
+import type { DateTime, JSDateTime, Rate, uUST } from "@anchor-protocol/types"
 import { gql, useQuery } from "@apollo/client"
 import { floor } from "@terra-dev/big-math"
 import { useEventBus } from "@terra-dev/event-bus"
@@ -232,12 +226,13 @@ export function useInterestEarned(
   period: Period
 ): MappedQueryResult<RawVariables, RawData, Data> {
   const eventBus = useEventBus()
-  const dispatch =
-    typeof eventBus !== "undefined"
-      ? eventBus.dispatch
-      : (eventType: string) => {
+  const dispatch = useMemo<any>(() => {
+    return typeof eventBus === "undefined"
+      ? (eventType: string) => {
           return false
         }
+      : eventBus.dispatch
+  }, [eventBus])
 
   const userWallet = useUserWallet()
 
