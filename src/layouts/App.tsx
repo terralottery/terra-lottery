@@ -5,7 +5,6 @@ import { WalletProvider, useWalletState } from "../hooks/useWallet"
 import { ContractProvider, useContractState } from "../hooks/useContract"
 import { StatsProvider, useStatsState } from "../statistics/useStats"
 import MobileAlert from "./MobileAlert"
-import Airdrop from "./Airdrop"
 import Header from "./Header"
 import Footer from "./Footer"
 import "./App.scss"
@@ -27,7 +26,6 @@ const App = () => {
               {routes()}
             </Container>
             <Footer />
-            <Airdrop />
           </StatsProvider>
         </ContractProvider>
       </WalletProvider>
