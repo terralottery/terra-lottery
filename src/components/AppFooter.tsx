@@ -1,3 +1,4 @@
+import discord from "./Community/discord.png"
 import twitter from "./Community/twitter.png"
 import github from "./Community/github.png"
 
@@ -13,14 +14,19 @@ interface Props {
 const AppFooter = ({ network }: Props) => {
   const community = [
     {
-      href: `https://github.com/terralottery/terra-lottery`,
+      href: `https://github.terra-lottery.com`,
       src: github,
       alt: "Github",
     },
     {
-      href: "https://twitter.com/terra_lottery",
+      href: "https://twitter.terra-lottery.com",
       src: twitter,
       alt: "Twitter",
+    },
+    {
+      href: "https://discord.terra-lottery.com",
+      src: discord,
+      alt: "Discord",
     },
   ]
 
