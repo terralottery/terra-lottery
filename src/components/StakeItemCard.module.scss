@@ -37,11 +37,13 @@
 }
 
 .heading {
-  $font-size: 16px;
+  $font-size: 18px;
   color: $darkblue;
   font-size: $font-size;
   text-align: center;
   height: ($font-size * $line-height);
+  width: 100%;
+  margin: 0 0 10px;
 
   &:empty {
     background: white;
@@ -51,16 +53,26 @@
   }
 }
 
+.subheading {
+  $font-size: 16px;
+  color: $darkblue;
+  font-size: $font-size;
+  font-weight: normal;
+  text-align: center;
+  height: ($font-size * $line-height);
+  width: 100%;
+}
+
 /* stats */
 .stats {
   border-top: $border;
   padding-top: 20px;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 }
 
 .dd {
   font-size: 16px;
-  font-weight: normal;
+  font-weight: bold;
 }
 
 .vertical {

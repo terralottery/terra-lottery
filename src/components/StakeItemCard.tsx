@@ -10,6 +10,9 @@ import styles from "./StakeItemCard.module.scss"
 import LinkButton from "./LinkButton"
 import Legend from "./Legend"
 import { Countdown } from "./Countdown"
+import { UUSD } from "../constants"
+import { DlFooter } from "./Dl"
+import { ustToTickets } from "../helpers/calc"
 
 const cx = classNames.bind(styles)
 
@@ -21,19 +24,28 @@ export interface Props {
   participating: boolean
   apy: number
   nextDraw: Date
+  jackpot?: string
+  tickets?: string
   to: string
 }
 
 const StakeItemCard: FC<Props> = ({ lpToken, symbol, name, to, ...item }) => {
-  const { participating, apy, children, nextDraw } = item
-
+  const { participating, apy, children, nextDraw, jackpot, tickets } = item
   const badges = [
     ...insertIf(participating, { label: "Participating", color: "blue" }),
   ]
 
-  const stats = [
-    { title: "APY", content: <Count format={percent}>{String(apy)}</Count> },
-  ].filter(({ content }) => content)
+  const stats = []
+  if (participating && tickets) {
+    stats.push({
+      title: "Your Tickets",
+      content: <Count integer>{ustToTickets(tickets)}</Count>,
+    })
+  }
+  stats.push({
+    title: "APY",
+    content: <Count format={percent}>{String(apy)}</Count>,
+  })
 
   const link = {
     to: to,
@@ -48,18 +60,22 @@ const StakeItemCard: FC<Props> = ({ lpToken, symbol, name, to, ...item }) => {
 
           <header className={cx(styles.header, { to })}>
             <h1 className={styles.heading}>{name ?? getLpName(symbol)}</h1>
+            <h2 className={styles.subheading}>
+              Jackpot:{" "}
+              <Count symbol={UUSD} integer>
+                {jackpot}
+              </Count>
+            </h2>
+
             <Legend title="Next draw in:">
               <Countdown end={nextDraw} />
             </Legend>
           </header>
-          <section className={styles.vertical}>
-            {stats.map(({ title, content }, index) => (
-              <article className={styles.item} key={index}>
-                <h1 className={styles.title}>{title}</h1>
-                <div className={styles.content}>{content}</div>
-              </article>
-            ))}
-          </section>
+          <DlFooter
+            list={stats}
+            className={styles.stats}
+            ddClassName={styles.dd}
+          />
         </div>
         {children}
         <LinkButton {...link} />

@@ -103,3 +103,7 @@ export default {
       {} as { asset: Asset; uusd: Asset }
     ),
 }
+
+export function ustToTickets(value: string) {
+  return String(new BigNumber(value).div(new BigNumber(10).pow(6)))
+}

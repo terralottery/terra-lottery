@@ -13,15 +13,19 @@ import { currentAPY } from "../Dashboard/DashboardHeader"
 import { useInterest } from "../../graphql/queries/interest"
 import { useConstants } from "../../contexts/contants"
 import { getNextDraw } from "../../components/Countdown"
+import useDashboard, { StatsNetwork } from "../../statistics/useDashboard"
+import useMy from "../My/useMy"
 
 const PoolsList = () => {
   const keys = [BalanceKey.LPSTAKED, BalanceKey.LPSTAKABLE]
   const { url } = useRouteMatch()
   const { loading } = useRefetch(keys)
   const { blocksPerYear } = useConstants()
+  const { dashboard } = useDashboard(StatsNetwork.TERRA)
   const {
     data: { marketStatus },
   } = useInterest()
+  const { pools } = useMy()
 
   const apy = useMemo(() => currentAPY(marketStatus, blocksPerYear), [
     blocksPerYear,
@@ -40,6 +44,8 @@ const PoolsList = () => {
       to: `${url}/terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu`,
       participating: true,
       nextDraw: getNextDraw("7d"),
+      jackpot: dashboard?.totalValueLocked,
+      tickets: pools?.totalTickets,
     },
     {
       lpToken: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
@@ -48,8 +54,9 @@ const PoolsList = () => {
       token: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
       apy: ticketApy,
       to: `${url}/terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu`,
-      participating: true,
+      participating: false,
       nextDraw: getNextDraw("14d"),
+      jackpot: dashboard?.totalValueLocked,
     },
     {
       lpToken: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
@@ -58,8 +65,9 @@ const PoolsList = () => {
       token: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
       apy: ticketApy,
       to: `${url}/terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu`,
-      participating: true,
+      participating: false,
       nextDraw: getNextDraw("21d"),
+      jackpot: dashboard?.totalValueLocked,
     },
   ]
 
