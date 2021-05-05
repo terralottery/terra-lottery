@@ -104,6 +104,8 @@ export default {
     ),
 }
 
-export function ustToTickets(value: string) {
-  return String(new BigNumber(value).div(new BigNumber(10).pow(6)))
+export function ustToTickets(value?: string) {
+  return value
+    ? String(new BigNumber(value).div(new BigNumber(10).pow(6)))
+    : "0"
 }

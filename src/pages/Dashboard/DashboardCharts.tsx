@@ -1,4 +1,4 @@
-import { last } from "ramda"
+import { last, sort } from "ramda"
 import { UUSD } from "../../constants"
 import Tooltip from "../../lang/Tooltip.json"
 import { lookup } from "../../libs/parse"
@@ -22,8 +22,10 @@ const DashboardCharts = (props: Partial<Dashboard>) => {
         >
           <ChartContainer
             value={
-              <Count symbol={UUSD} integer>
-                {liquidityHistory ? last(liquidityHistory)?.value : "0"}
+              <Count symbol="Tickets" integer>
+                {liquidityHistory
+                  ? last(sortByTimestamp(liquidityHistory))?.value
+                  : "0"}
               </Count>
             }
             datasets={
@@ -44,7 +46,9 @@ const DashboardCharts = (props: Partial<Dashboard>) => {
           <ChartContainer
             value={
               <Count symbol="Wallets" integer>
-                {liquidityHistory ? last(liquidityHistory)?.value : "0"}
+                {liquidityHistory
+                  ? last(sortByTimestamp(liquidityHistory))?.value
+                  : "0"}
               </Count>
             }
             datasets={
@@ -60,7 +64,9 @@ const DashboardCharts = (props: Partial<Dashboard>) => {
 
 export default DashboardCharts
 
-/* helpers */
+const sortByTimestamp = (data: ChartItem[]) =>
+  sort(({ timestamp: a }, { timestamp: b }) => a - b, data)
+
 const toDatasets = (data: ChartItem[], symbol?: string) =>
   data.map(({ timestamp, value }) => {
     return { t: timestamp, y: lookup(value, symbol, { integer: true }) }

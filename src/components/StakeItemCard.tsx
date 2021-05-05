@@ -39,7 +39,11 @@ const StakeItemCard: FC<Props> = ({ lpToken, symbol, name, to, ...item }) => {
   if (participating && tickets) {
     stats.push({
       title: "Your Tickets",
-      content: <Count integer>{ustToTickets(tickets)}</Count>,
+      content: (
+        <Count symbol="Tickets" integer>
+          {tickets}
+        </Count>
+      ),
     })
   }
   stats.push({
