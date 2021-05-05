@@ -6,7 +6,6 @@ import { PriceKey } from "../../hooks/contractKeys"
 import { StatsNetwork } from "../../statistics/useDashboard"
 import Grid from "../../components/Grid"
 import Card from "../../components/Card"
-import Dl from "../../components/Dl"
 import Summary from "../../components/Summary"
 import Count from "../../components/Count"
 import { TooltipIcon } from "../../components/Tooltip"
@@ -32,7 +31,7 @@ export function currentAPY(
 
 const DashboardHeader = ({ network, ...props }: Props) => {
   const { blocksPerYear } = useConstants()
-  const { latest24h, totalValueLocked } = props
+  const { totalValueLocked } = props
   const sevenDayEnd = getNextDraw("7d")
   const fourteenDayEnd = getNextDraw("14d")
   const twentyOneDayEnd = getNextDraw("21d")
@@ -51,21 +50,6 @@ const DashboardHeader = ({ network, ...props }: Props) => {
 
   return (
     <>
-      <Grid>
-        <Dl
-          list={[
-            {
-              title: "Total Tickets:",
-              content: (
-                <TooltipIcon content={Tooltip.Dashboard.Tickets}>
-                  <Count integer>{latest24h?.transactions}</Count>
-                </TooltipIcon>
-              ),
-            },
-          ]}
-        />
-      </Grid>
-
       <Grid>
         <Card>
           <Summary

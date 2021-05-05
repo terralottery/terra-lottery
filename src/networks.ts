@@ -1,6 +1,6 @@
 const networks: Record<string, LocalNetworkConfig> = {
   mainnet: {
-    contract: "https://whitelist.mirror.finance/columbus.json",
+    contract: "https://tickets.terra-lottery.com/columbus.json",
     mantle: "https://mantle.terra.dev/",
     stats: "https://graph.mirror.finance/graphql",
     shuttle: {

@@ -159,7 +159,6 @@ export const useContractState = (address: string): Contract => {
     }
 
     const result = dictionary[key]?.[token]
-
     const USTPrice = "1"
     const isUSTPrice =
       token === UUSD && Object.values<string>(PriceKey).includes(key)

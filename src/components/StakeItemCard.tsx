@@ -12,7 +12,6 @@ import Legend from "./Legend"
 import { Countdown } from "./Countdown"
 import { UUSD } from "../constants"
 import { DlFooter } from "./Dl"
-import { ustToTickets } from "../helpers/calc"
 
 const cx = classNames.bind(styles)
 
@@ -21,7 +20,6 @@ export interface Props {
   symbol: string
   name?: string
 
-  participating: boolean
   apy: number
   nextDraw: Date
   jackpot?: string
@@ -30,7 +28,8 @@ export interface Props {
 }
 
 const StakeItemCard: FC<Props> = ({ lpToken, symbol, name, to, ...item }) => {
-  const { participating, apy, children, nextDraw, jackpot, tickets } = item
+  const { apy, children, nextDraw, jackpot, tickets } = item
+  const participating = Number(tickets) > 0
   const badges = [
     ...insertIf(participating, { label: "Participating", color: "blue" }),
   ]
@@ -54,7 +53,6 @@ const StakeItemCard: FC<Props> = ({ lpToken, symbol, name, to, ...item }) => {
   const link = {
     to: to,
     children: "Get Tickets",
-    fill: true,
   }
   return (
     <Card badges={badges} key={name}>

@@ -1,5 +1,5 @@
 import { useRouteMatch } from "react-router-dom"
-import { useRefetch } from "../../hooks"
+import { useContract, useContractsAddress, useRefetch } from "../../hooks"
 import { BalanceKey } from "../../hooks/contractKeys"
 
 import Grid from "../../components/Grid"
@@ -14,7 +14,8 @@ import { useInterest } from "../../graphql/queries/interest"
 import { useConstants } from "../../contexts/contants"
 import { getNextDraw } from "../../components/Countdown"
 import useDashboard, { StatsNetwork } from "../../statistics/useDashboard"
-import useMy from "../My/useMy"
+import { poolName } from "../Pools"
+import { AUST, T14UST, T21UST } from "../../constants"
 
 const PoolsList = () => {
   const keys = [BalanceKey.LPSTAKED, BalanceKey.LPSTAKABLE]
@@ -25,49 +26,49 @@ const PoolsList = () => {
   const {
     data: { marketStatus },
   } = useInterest()
-  const { pools } = useMy()
-
+  const { getToken } = useContractsAddress()
+  const { find } = useContract()
   const apy = useMemo(() => currentAPY(marketStatus, blocksPerYear), [
     blocksPerYear,
     marketStatus,
   ])
 
+  useRefetch([BalanceKey.TOKEN, BalanceKey.TOKEN])
   const ticketApy = Number(big(apy).toFixed()) / 2
 
   const pricePools = [
     {
       lpToken: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
-      name: "UST - 7d Lottery",
+      name: poolName.T7UST,
       symbol: "UST",
-      token: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
+      id: "t7ust",
       apy: ticketApy,
-      to: `${url}/terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu`,
-      participating: true,
+      to: `${url}/t7ust`,
       nextDraw: getNextDraw("7d"),
       jackpot: dashboard?.totalValueLocked,
-      tickets: pools?.totalTickets,
+      tickets: find(BalanceKey.TOKEN, getToken(AUST)),
     },
     {
       lpToken: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
-      name: "UST - 14d Lottery",
+      name: poolName.T14UST,
       symbol: "UST",
-      token: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
+      id: "t14ust",
       apy: ticketApy,
-      to: `${url}/terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu`,
-      participating: false,
+      to: `${url}/t14ust`,
       nextDraw: getNextDraw("14d"),
       jackpot: dashboard?.totalValueLocked,
+      tickets: find(BalanceKey.TOKEN, getToken(T14UST)),
     },
     {
       lpToken: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
-      name: "UST - 21d Lottery",
+      name: poolName.T21UST,
       symbol: "UST",
-      token: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
+      id: "t21ust",
       apy: ticketApy,
-      to: `${url}/terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu`,
-      participating: false,
+      to: `${url}/t21ust`,
       nextDraw: getNextDraw("21d"),
       jackpot: dashboard?.totalValueLocked,
+      tickets: find(BalanceKey.TOKEN, getToken(T21UST)),
     },
   ]
 
@@ -79,7 +80,7 @@ const PoolsList = () => {
 
       <Grid wrap={3}>
         {pricePools.map((item) => (
-          <StakeItemCard {...item} key={item.name} />
+          <StakeItemCard {...item} key={item.id} />
         ))}
       </Grid>
     </article>

@@ -49,7 +49,7 @@
 
   &.selected,
   &:not(.disabled):hover {
-    background: fade-out(white, 0.95);
+    background: fade-out($darkblue, 0.95);
   }
 
   &.disabled {

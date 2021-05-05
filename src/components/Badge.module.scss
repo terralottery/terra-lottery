@@ -6,7 +6,7 @@
   display: inline-flex;
   height: $height;
   border-radius: ($height / 2);
-  background: fade-out(white, 0.9);
+  background: fade-out($darkblue, 0.9);
   color: $darkblue;
   font-size: 10px;
   font-weight: 500;

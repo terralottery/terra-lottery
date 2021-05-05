@@ -12,7 +12,11 @@ export const SMALLEST = 1e6
 export const MIR = "MIR"
 export const UUSD = "uusd"
 export const UST = "UST"
+export const AUST = "aUST"
 export const LP = "LP"
+export const T7UST = "t7UST"
+export const T14UST = "t14UST"
+export const T21UST = "t21UST"
 
 /* mirror:configs */
 export const GENESIS = 1607022000000

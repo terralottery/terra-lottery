@@ -11,6 +11,12 @@ export enum MenuKey {
   DETAILS = "Prize Pool Details",
 }
 
+export enum poolName {
+  T7UST = "UST - 7d Lottery",
+  T14UST = "UST - 14d Lottery",
+  T21UST = "UST - 21d Lottery",
+}
+
 export const menu: Record<MenuKey, RouteProps> = {
   [MenuKey.INDEX]: { path: "/", exact: true, component: PoolsHome },
   [MenuKey.CLAIMALL]: { path: "/claim", component: Claim },

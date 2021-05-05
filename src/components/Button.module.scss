@@ -68,7 +68,7 @@
   }
 
   &.secondary {
-    @include button-outline-variant(fade-out(white, 0.4));
+    @include button-outline-variant(fade-out($darkblue, 0.1));
   }
 }
 

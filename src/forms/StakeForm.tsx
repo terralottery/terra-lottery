@@ -1,12 +1,11 @@
 import Tooltip from "../lang/Tooltip.json"
 import useNewContractMsg from "../terra/useNewContractMsg"
-import { LP, MIR } from "../constants"
-import { gt, minus, max as findMax } from "../libs/math"
+import { LP } from "../constants"
+import { gt } from "../libs/math"
 import { formatAsset, lookup, toAmount } from "../libs/parse"
 import useForm from "../libs/useForm"
 import { validate as v, placeholder, step } from "../libs/formHelpers"
 import { renderBalance } from "../libs/formHelpers"
-import getLpName from "../libs/getLpName"
 import { useContractsAddress, useContract, useRefetch } from "../hooks"
 import { BalanceKey } from "../hooks/contractKeys"
 
@@ -22,47 +21,43 @@ enum Key {
 }
 
 interface Props {
+  poolName: string
   type: Type
   token: string
+  stakedToken: string
   tab: Tab
-  /** Gov stake */
+  tokenSymbol?: string
   gov?: boolean
+  contract?: string
 }
 
-const StakeForm = ({ type, token, tab, gov }: Props) => {
-  const balanceKey = (!gov
-    ? {
-        [Type.STAKE]: BalanceKey.LPSTAKABLE,
-        [Type.UNSTAKE]: BalanceKey.LPSTAKED,
-      }
-    : {
-        [Type.STAKE]: BalanceKey.TOKEN,
-        [Type.UNSTAKE]: BalanceKey.MIRGOVSTAKED,
-      })[type as Type]
+const StakeForm = ({
+  poolName,
+  type,
+  token,
+  stakedToken,
+  tab,
+  gov,
+  contract,
+  tokenSymbol,
+}: Props) => {
+  const balanceKey = {
+    [Type.STAKE]: BalanceKey.TOKEN,
+    [Type.UNSTAKE]: BalanceKey.TOKEN,
+  }[type as Type]
 
   /* context */
-  const { contracts, whitelist, getSymbol } = useContractsAddress()
-  const { find, parsed } = useContract()
-  useRefetch([balanceKey, !gov ? BalanceKey.LPSTAKED : BalanceKey.MIRGOVSTAKED])
-
-  const getLocked = () =>
-    findMax(
-      parsed[BalanceKey.MIRGOVSTAKED]?.locked_balance?.map(
-        ([, { balance }]: LockedBalance) => balance
-      ) ?? [0]
-    )
-
-  const lockedIds = parsed[BalanceKey.MIRGOVSTAKED]?.locked_balance
-    ?.map(([id]: LockedBalance) => id)
-    .join(", ")
+  const { contracts, whitelist, getSymbol, getToken } = useContractsAddress()
+  const { find } = useContract()
+  useRefetch([balanceKey, BalanceKey.TOKEN])
 
   const getMax = () => {
-    const balance = find(balanceKey, token)
-    const locked = getLocked()
+    const balance =
+      type === Type.UNSTAKE
+        ? find(balanceKey, getToken(stakedToken))
+        : find(balanceKey, token)
 
-    return gov && type === Type.UNSTAKE && gt(locked, 0)
-      ? minus(balance, locked)
-      : balance
+    return balance
   }
 
   /* form:validate */
@@ -81,7 +76,6 @@ const StakeForm = ({ type, token, tab, gov }: Props) => {
 
   /* render:form */
   const max = getMax()
-  const locked = getLocked()
   const fields = getFields({
     [Key.value]: {
       label: "Amount",
@@ -92,28 +86,29 @@ const StakeForm = ({ type, token, tab, gov }: Props) => {
         autoFocus: true,
       },
       help: renderBalance(max, symbol),
-      unit: gov ? MIR : LP,
+      unit: type === Type.UNSTAKE ? getSymbol(stakedToken) : tokenSymbol ?? LP,
       max: gt(max, 0)
         ? () => setValue(Key.value, lookup(max, symbol))
         : undefined,
     },
   })
 
-  /* confirm */
-  const staked = find(
-    !gov ? BalanceKey.LPSTAKED : BalanceKey.MIRGOVSTAKED,
-    token
-  )
-
   const contents = !value
     ? undefined
-    : gt(staked, 0)
-    ? [
-        {
-          title: "Staked",
-          content: formatAsset(staked, !gov ? getLpName(symbol) : MIR),
-        },
-      ]
+    : gt(max, 0)
+    ? type === Type.UNSTAKE
+      ? [
+          {
+            title: `${poolName} Tickets`,
+            content: formatAsset(max, "Tickets"),
+          },
+        ]
+      : [
+          {
+            title: `${poolName} Tickets`,
+            content: formatAsset(max, "Tickets"),
+          },
+        ]
     : []
 
   /* submit */
@@ -122,37 +117,22 @@ const StakeForm = ({ type, token, tab, gov }: Props) => {
   const assetToken = { asset_token: token }
   const data = {
     [Type.STAKE]: [
-      gov
-        ? newContractMsg(contracts["mirrorToken"], {
-            send: {
-              amount,
-              contract: contracts["gov"],
-              msg: toBase64({ stake_voting_tokens: {} }),
-            },
-          })
-        : newContractMsg(lpToken, {
-            send: {
-              amount,
-              contract: contracts["staking"],
-              msg: toBase64({ bond: assetToken }),
-            },
-          }),
+      newContractMsg(lpToken, {
+        send: {
+          amount,
+          contract: contracts["staking"],
+          msg: toBase64({ bond: assetToken }),
+        },
+      }),
     ],
     [Type.UNSTAKE]: [
-      gov
-        ? newContractMsg(contracts["gov"], {
-            withdraw_voting_tokens: { amount },
-          })
-        : newContractMsg(contracts["staking"], {
-            unbond: { ...assetToken, amount },
-          }),
+      newContractMsg(contracts["staking"], {
+        unbond: { ...assetToken, amount },
+      }),
     ],
   }[type as Type]
 
-  const messages =
-    gov && type === Type.UNSTAKE && gt(locked, 0)
-      ? [`${formatAsset(locked, MIR)} are voted in poll ${lockedIds}`]
-      : undefined
+  const messages = undefined
 
   const disabled = invalid
 
