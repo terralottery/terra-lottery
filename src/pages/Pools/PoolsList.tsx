@@ -15,6 +15,11 @@ import usePool from "../../forms/usePool"
 
 import PoolsListTitle from "./PoolsListTitle"
 import styles from "./PoolsList.module.scss"
+import { useMemo } from "react"
+import big from "big.js"
+import { currentAPY } from "../Dashboard/DashboardHeader"
+import { useInterest } from "../../graphql/queries/interest"
+import { useConstants } from "../../contexts/contants"
 
 const PoolsList = () => {
   const keys = [BalanceKey.LPSTAKED, BalanceKey.LPSTAKABLE]
@@ -27,6 +32,17 @@ const PoolsList = () => {
   const stats = useAssetStats()
   const { apr } = stats
   const getPool = usePool()
+  const { blocksPerYear } = useConstants()
+  const {
+    data: { marketStatus },
+  } = useInterest()
+
+  const apy = useMemo(() => currentAPY(marketStatus, blocksPerYear), [
+    blocksPerYear,
+    marketStatus,
+  ])
+
+  const ticketApy = Number(big(apy).toFixed()) / 2
 
   const getItem = ({ token }: ListedItem) => {
     const apy = stats["apy"][token] ?? "0"
@@ -57,6 +73,36 @@ const PoolsList = () => {
     }
   }
 
+  const pricePools = [
+    {
+      lpToken: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
+      name: "UST - 7d Lottery",
+      symbol: "UST",
+      token: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
+      apy: ticketApy,
+      to: `${url}/terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu`,
+      participating: true,
+    },
+    {
+      lpToken: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
+      name: "UST - 14d Lottery",
+      symbol: "UST",
+      token: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
+      apy: ticketApy,
+      to: `${url}/terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu`,
+      participating: true,
+    },
+    {
+      lpToken: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
+      name: "UST - 21d Lottery",
+      symbol: "UST",
+      token: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
+      apy: ticketApy,
+      to: `${url}/terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu`,
+      participating: true,
+    },
+  ]
+
   return (
     <article>
       <LoadingTitle className={styles.encourage} loading={loading}>
@@ -64,16 +110,9 @@ const PoolsList = () => {
       </LoadingTitle>
 
       <Grid wrap={3}>
-        {listed
-          .map(getItem)
-          .sort(({ token: a }, { token: b }) => number(minus(apr[b], apr[a])))
-          .sort(
-            ({ symbol: a }, { symbol: b }) =>
-              Number(b === "MIR") - Number(a === "MIR")
-          )
-          .map((item) => (
-            <StakeItemCard {...item} key={item.token} />
-          ))}
+        {pricePools.map((item) => (
+          <StakeItemCard {...item} key={item.name} />
+        ))}
       </Grid>
     </article>
   )

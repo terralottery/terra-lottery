@@ -72,12 +72,12 @@
 }
 
 .title {
-  color: fade-out(white, 0.6);
+  color: $darkblue;
   font-weight: 500;
 }
 
 .content {
-  color: $light;
+  color: $darkblue;
 }
 
 /* emphasize */
