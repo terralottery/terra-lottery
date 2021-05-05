@@ -7,6 +7,9 @@ import Card from "./Card"
 import Count from "./Count"
 import Token from "./Token"
 import styles from "./StakeItemCard.module.scss"
+import LinkButton from "./LinkButton"
+import Legend from "./Legend"
+import { Countdown } from "./Countdown"
 
 const cx = classNames.bind(styles)
 
@@ -17,12 +20,12 @@ export interface Props {
 
   participating: boolean
   apy: number
-
-  to?: string
+  nextDraw: Date
+  to: string
 }
 
 const StakeItemCard: FC<Props> = ({ lpToken, symbol, name, to, ...item }) => {
-  const { participating, apy, children } = item
+  const { participating, apy, children, nextDraw } = item
 
   const badges = [
     ...insertIf(participating, { label: "Participating", color: "blue" }),
@@ -32,14 +35,22 @@ const StakeItemCard: FC<Props> = ({ lpToken, symbol, name, to, ...item }) => {
     { title: "APY", content: <Count format={percent}>{String(apy)}</Count> },
   ].filter(({ content }) => content)
 
+  const link = {
+    to: to,
+    children: "Get Tickets",
+    fill: true,
+  }
   return (
-    <Card to={to} badges={badges} key={name}>
+    <Card badges={badges} key={name}>
       <article className={styles.component}>
         <div className={styles.main}>
           <Token symbol={symbol} />
 
           <header className={cx(styles.header, { to })}>
             <h1 className={styles.heading}>{name ?? getLpName(symbol)}</h1>
+            <Legend title="Next draw in:">
+              <Countdown end={nextDraw} />
+            </Legend>
           </header>
           <section className={styles.vertical}>
             {stats.map(({ title, content }, index) => (
@@ -50,8 +61,8 @@ const StakeItemCard: FC<Props> = ({ lpToken, symbol, name, to, ...item }) => {
             ))}
           </section>
         </div>
-
         {children}
+        <LinkButton {...link} />
       </article>
     </Card>
   )

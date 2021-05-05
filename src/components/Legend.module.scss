@@ -5,13 +5,22 @@
   color: $darkblue;
   font-size: 12px;
   text-transform: uppercase;
+  align-items: center;
+  white-space: nowrap;
+  padding: 0 10px 0 0;
+  display: flex;
 }
 
 .content {
   color: $darkblue;
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .wrapper {
   margin: 15px 0 0;
+  display: flex;
+  flex-wrap: wrap;
 }

@@ -26,10 +26,13 @@
 .header {
   @include flex;
   margin-top: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
 
-  &.to {
-    margin-left: 20px;
+  > article {
+    display: flex;
+    justify-content: center;
+    flex: 0 0 100%;
   }
 }
 
@@ -66,9 +69,13 @@
 }
 
 .item {
-  @include flex(space-between);
-  font-size: 12px;
+  @include flex(center);
+  font-size: 14px;
   margin-bottom: 5px;
+
+  * {
+    margin: 0 5px;
+  }
 }
 
 .title {
