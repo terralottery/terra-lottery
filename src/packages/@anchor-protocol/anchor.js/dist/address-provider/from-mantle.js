@@ -1,6 +1,4 @@
-Object.defineProperty(exports, "__esModule", { value: true })
-exports.AddressProviderFromMantle = void 0
-class AddressProviderFromMantle {
+export class AddressProviderFromMantle {
   blunaReward() {
     throw new Error("Method not implemented.")
   }
@@ -80,5 +78,3 @@ class AddressProviderFromMantle {
     throw new Error("Method not implemented.")
   }
 }
-exports.AddressProviderFromMantle = AddressProviderFromMantle
-//# sourceMappingURL=from-mantle.js.map

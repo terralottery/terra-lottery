@@ -1,6 +1,4 @@
-Object.defineProperty(exports, "__esModule", { value: true })
-exports.AddressProviderFromJson = void 0
-class AddressProviderFromJson {
+export class AddressProviderFromJson {
   constructor(data) {
     this.data = data
   }
@@ -80,5 +78,3 @@ class AddressProviderFromJson {
     return this.data.team
   }
 }
-exports.AddressProviderFromJson = AddressProviderFromJson
-//# sourceMappingURL=from-json.js.map

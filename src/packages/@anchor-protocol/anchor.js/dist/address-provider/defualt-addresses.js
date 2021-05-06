@@ -1,6 +1,4 @@
-Object.defineProperty(exports, "__esModule", { value: true })
-exports.contractAddresses = void 0
-exports.contractAddresses = {
+export const contractAddresses = {
   bLunaHub: "terra1eve4z3vwa072z62n5r4hh8wfy2927dxxfja8lf",
   blunaToken: "terra1j50pr8we753a6f60c8kj7x5hyasfq3ywcclq24",
   blunaReward: "terra1all8dp67y8k7087kph66jjqsvc2aj7xvee9460",
@@ -27,4 +25,3 @@ exports.contractAddresses = {
   MIR: "terra15gwkyepfc6xgca5t5zefzwy42uts8l2m4g40k6",
   airdrop: "terra1l6c83meglqnhs2xke7cyc7vrywn78h6dsfdp0x",
 }
-//# sourceMappingURL=defualt-addresses.js.map

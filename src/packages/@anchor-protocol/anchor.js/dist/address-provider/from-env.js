@@ -1,7 +1,5 @@
-Object.defineProperty(exports, "__esModule", { value: true })
-exports.AddressProviderFromEnvVar = void 0
 const react_app_prefix_1 = require("./react-app-prefix")
-class AddressProviderFromEnvVar {
+export class AddressProviderFromEnvVar {
   blunaReward() {
     return getFromEnv("bAssetReward")
   }
@@ -81,7 +79,7 @@ class AddressProviderFromEnvVar {
     return getFromEnv(`team`)
   }
 }
-exports.AddressProviderFromEnvVar = AddressProviderFromEnvVar
+
 function getFromEnv(key) {
   const val = process.env[react_app_prefix_1.reactifyEnv(key)]
   if (typeof val === "undefined") {
@@ -89,4 +87,3 @@ function getFromEnv(key) {
   }
   return val
 }
-//# sourceMappingURL=from-env.js.map

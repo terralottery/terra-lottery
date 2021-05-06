@@ -17,10 +17,11 @@ import {
   useWallet,
 } from "../packages/@anchor-protocol/wallet-provider"
 import {
-  AddressProvider,
   AddressMap,
   AddressProviderFromJson,
-} from "../packages/@anchor-protocol/anchor.js/dist"
+} from "../packages/@anchor-protocol/anchor.js/dist/address-provider/from-json"
+import { AddressProvider } from "../packages/@anchor-protocol/anchor.js/dist/address-provider/provider"
+
 import { GlobalDependency } from "@terra-dev/broadcastable-operation/global"
 import { QueryDependencyProvider } from "../packages/@anchor-protocol/queries"
 import { BankProvider } from "../contexts/bank"

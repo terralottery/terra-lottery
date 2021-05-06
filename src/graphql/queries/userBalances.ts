@@ -1,5 +1,4 @@
 import type {
-  ContractAddress,
   uANC,
   uAncUstLP,
   uaUST,
@@ -17,7 +16,6 @@ import { MappedQueryResult } from "./types"
 import { useRefetch } from "./useRefetch"
 import { useUserWallet } from "../../packages/@anchor-protocol/wallet-provider"
 import { NominalType } from "@anchor-protocol/types/common"
-import { CW20Addr, HumanAddr } from "@anchor-protocol/types/contracts/common"
 
 export declare type uMIR<T = string> = T & NominalType<"umir">
 export declare type MIR<T = string> = T & NominalType<"mir">

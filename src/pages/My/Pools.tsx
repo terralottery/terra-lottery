@@ -22,7 +22,6 @@ import big from "big.js"
 import { currentAPY } from "../Dashboard/DashboardHeader"
 import { useConstants } from "../../contexts/contants"
 import { useInterest } from "../../graphql/queries/interest"
-import useMyPools from "./useMyPools"
 import DashboardActions from "../../components/DashboardActions"
 
 interface Props {
