@@ -1,79 +1,81 @@
-import { NominalType } from '../common';
+import { NominalType } from "../common"
 
-export type HumanAddr = string & NominalType<'HumanAddr'>;
-export type CanonicalAddr = string & NominalType<'CanonicalAddr'>;
-export type CW20Addr = string & NominalType<'CW20Addr'>;
+export type HumanAddr = string & NominalType<"HumanAddr">
+export type CanonicalAddr = string & NominalType<"CanonicalAddr">
+export type CW20Addr = string & NominalType<"CW20Addr">
 
-export type StableDenom = string & NominalType<'StableDenom'>;
-export type bAssetDenom = string & NominalType<'bAssetDenom'>;
-export type AssetDenom = string & NominalType<'AssetDenom'>;
-export type Denom = StableDenom | bAssetDenom | AssetDenom;
+export type StableDenom = string & NominalType<"StableDenom">
+export type bAssetDenom = string & NominalType<"bAssetDenom">
+export type AssetDenom = string & NominalType<"AssetDenom">
+export type Denom = StableDenom | bAssetDenom | AssetDenom
 
-export type Base64EncodedJson = string & NominalType<'Base64EncodedJson'>;
+export type Base64EncodedJson = string & NominalType<"Base64EncodedJson">
 
 export type WASMContractResult<T extends {} = {}> = {
-  Result: string;
-} & T;
+  Result: string
+} & T
 
 export interface ContractAddress {
   bluna: {
     /** addressProvider.blunaReward() */
-    reward: HumanAddr;
+    reward: HumanAddr
     /** addressProvider.blunaHub() */
-    hub: HumanAddr;
+    hub: HumanAddr
     /** addressProvider.airdrop() */
-    airdropRegistry: HumanAddr;
-  };
+    airdropRegistry: HumanAddr
+  }
   moneyMarket: {
     /** addressProvider.market() */
-    market: HumanAddr;
+    market: HumanAddr
     /** addressProvider.custody() */
-    custody: HumanAddr;
+    custody: HumanAddr
     /** addressProvider.overseer() */
-    overseer: HumanAddr;
+    overseer: HumanAddr
     /** addressProvider.oracle() */
-    oracle: HumanAddr;
+    oracle: HumanAddr
     /** addressProvider.interest() */
-    interestModel: HumanAddr;
+    interestModel: HumanAddr
 
-    distributionModel: HumanAddr;
-  };
+    distributionModel: HumanAddr
+  }
   liquidation: {
     /** addressProvider.liquidation() */
-    liquidationContract: HumanAddr;
-  };
+    liquidationContract: HumanAddr
+  }
   anchorToken: {
     /** addressProvider.gov() */
-    gov: HumanAddr;
+    gov: HumanAddr
     /** addressProvider.staking() */
-    staking: HumanAddr;
+    staking: HumanAddr
     /** addressProvider.community() */
-    community: HumanAddr;
+    community: HumanAddr
     /** addressProvider.distributor() */
-    distributor: HumanAddr;
+    distributor: HumanAddr
     /** addressProvider.investorLock() */
-    investorLock: HumanAddr;
+    investorLock: HumanAddr
     /** addressProvider.teamLock() */
-    teamLock: HumanAddr;
+    teamLock: HumanAddr
     /** addressProvider.collector() */
-    collector: HumanAddr;
-  };
+    collector: HumanAddr
+  }
   terraswap: {
     /** addressProvider.terraswapblunaLunaPair() */
-    blunaLunaPair: HumanAddr;
+    blunaLunaPair: HumanAddr
     /** addressProvider.terraswapbAncUstPair() */
-    ancUstPair: HumanAddr;
-  };
+    ancUstPair: HumanAddr
+  }
   cw20: {
     /** addressProvider.blunaToken() */
-    bLuna: CW20Addr;
+    bLuna: CW20Addr
     /** addressProvider.aTerra() */
-    aUST: CW20Addr;
+    aUST: CW20Addr
     /** addressProvider.ANC() */
-    ANC: CW20Addr;
+    ANC: CW20Addr
+    /** addressProvider.MIR() */
+    MIR: CW20Addr
     /** addressProvider.terraswapbAncUstLPToken() */
-    AncUstLP: CW20Addr;
+    AncUstLP: CW20Addr
     /** addressProvider.terraswapblunaLunaLPToken() */
-    bLunaLunaLP: CW20Addr;
-  };
+    bLunaLunaLP: CW20Addr
+  }
 }

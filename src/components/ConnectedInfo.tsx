@@ -28,6 +28,9 @@ const ConnectedInfo = (props: Props) => {
     { symbol: "t7UST", balance: bank.userBalances.uaUST.toString() },
     { symbol: "t14UST", balance: "0" },
     { symbol: "t21UST", balance: "0" },
+    { symbol: "t7MIR", balance: "0" },
+    { symbol: "t21LUNA", balance: "0" },
+    { symbol: "t7ANC", balance: "0" },
   ]
 
   return (

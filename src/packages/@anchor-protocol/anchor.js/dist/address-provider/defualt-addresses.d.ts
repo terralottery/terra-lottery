@@ -1,0 +1,26 @@
+export declare const contractAddresses: {
+    bLunaHub: string;
+    blunaToken: string;
+    blunaReward: string;
+    blunaAirdrop: string;
+    mmInterestModel: string;
+    mmOracle: string;
+    mmMarket: string;
+    mmOverseer: string;
+    mmCustody: string;
+    mmLiquidation: string;
+    mmdistributionModel: string;
+    aTerra: string;
+    terraswapFactory: string;
+    terraswapblunaLunaPair: string;
+    terraswapblunaLunaLPToken: string;
+    terraswapAncUstPair: string;
+    terraswapAncUstLPToken: string;
+    gov: string;
+    faucet: string;
+    collector: string;
+    community: string;
+    staking: string;
+    ANC: string;
+    airdrop: string;
+};

@@ -7,7 +7,12 @@ import { getPath, MenuKey } from "../../routes"
 import Card from "../../components/Card"
 import Dl from "../../components/Dl"
 import LinkButton from "../../components/LinkButton"
-import { menu as poolsMenu, MenuKey as PoolsMenuKey, poolName } from "../Pools"
+import {
+  menu as poolsMenu,
+  MenuKey as PoolsMenuKey,
+  poolName,
+  Type,
+} from "../Pools"
 import NoAssets from "./NoAssets"
 import { useBank } from "../../contexts/bank"
 import Table from "../../components/Table"
@@ -17,6 +22,8 @@ import big from "big.js"
 import { currentAPY } from "../Dashboard/DashboardHeader"
 import { useConstants } from "../../contexts/contants"
 import { useInterest } from "../../graphql/queries/interest"
+import useMyPools from "./useMyPools"
+import DashboardActions from "../../components/DashboardActions"
 
 interface Props {
   totalTickets: string
@@ -76,6 +83,7 @@ const Pools = ({ loading, dataSource, ...props }: Props) => {
       balance: bank.userBalances.uaUST.toString(),
       value: totalTickets,
       chances: "1:17,837",
+      token: "t7ust",
     },
   ]
 
@@ -128,6 +136,29 @@ const Pools = ({ loading, dataSource, ...props }: Props) => {
                 return value
               },
               align: "right",
+            },
+            {
+              key: "actions",
+              dataIndex: "token",
+              render: (value) => {
+                const stake = `${getPath(MenuKey.POOLS)}/${value}`
+                const unstake = `${getPath(MenuKey.POOLS)}/${value}`
+
+                const list = [
+                  {
+                    to: { pathname: stake, hash: Type.STAKE },
+                    children: Type.STAKE,
+                  },
+                  {
+                    to: { pathname: unstake, hash: Type.UNSTAKE },
+                    children: Type.UNSTAKE,
+                  },
+                ]
+
+                return <DashboardActions list={list} />
+              },
+              align: "right",
+              fixed: "right",
             },
           ]}
           dataSource={lotteryPositions}

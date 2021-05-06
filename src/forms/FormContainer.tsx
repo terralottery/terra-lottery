@@ -73,7 +73,7 @@ export const FormContainer = ({ data: msgs, memo, ...props }: Props) => {
 
   /* tax */
   const fixedGas = 250000 as uUST<number>
-  const depositAmount = value as UST
+  const depositAmount = value ? (value as UST) : ("0" as UST)
   const bank = useBank()
   let transactionFee = useMemo(
     () => depositTxFee(depositAmount, bank, fixedGas),

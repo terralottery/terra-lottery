@@ -2,6 +2,7 @@ import { microfy } from "@anchor-protocol/notation"
 import type {
   Rate,
   uANC,
+  uMIR,
   uAncUstLP,
   uaUST,
   ubLuna,
@@ -9,7 +10,7 @@ import type {
   uLuna,
   UST,
   uUST,
-} from "@anchor-protocol/types"
+} from "../packages/@anchor-protocol/types"
 import { useUserWallet } from "../packages/@anchor-protocol/wallet-provider"
 import { BigSource } from "big.js"
 import type { ReactNode } from "react"
@@ -66,6 +67,7 @@ export function BankProvider({ children }: BankProviderProps) {
             uaUST: balancesData.uaUST ?? ("0" as uaUST),
             ubLuna: balancesData.ubLuna ?? ("0" as ubLuna),
             uANC: balancesData.uANC ?? ("0" as uANC),
+            uMIR: balancesData.uMIR ?? ("0" as uMIR),
             uAncUstLP: balancesData.uAncUstLP ?? ("0" as uAncUstLP),
             ubLunaLunaLP: balancesData.ubLunaLunaLP ?? ("0" as ubLunaLunaLP),
           },
@@ -80,12 +82,14 @@ export function BankProvider({ children }: BankProviderProps) {
             ubLuna: "0" as ubLuna,
             uaUST: "0" as uaUST,
             uANC: "0" as uANC,
+            uMIR: "0" as uMIR,
             uAncUstLP: "0" as uAncUstLP,
             ubLunaLunaLP: "0" as ubLunaLunaLP,
           },
           refetchUserBalances,
         }
   }, [
+    balancesData.uMIR,
     balancesData.uANC,
     balancesData.uAncUstLP,
     balancesData.uLuna,

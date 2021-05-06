@@ -1,8 +1,3 @@
-import {
-  AddressProvider,
-  AddressMap,
-  AddressProviderFromJson,
-} from "@anchor-protocol/anchor.js"
 import { ReactNode, useCallback, useMemo } from "react"
 import { BrowserRouter as Router } from "react-router-dom"
 import { ContractAddress, Rate, uUST } from "@anchor-protocol/types"
@@ -21,6 +16,11 @@ import {
   ChromeExtensionWalletProvider,
   useWallet,
 } from "../packages/@anchor-protocol/wallet-provider"
+import {
+  AddressProvider,
+  AddressMap,
+  AddressProviderFromJson,
+} from "../packages/@anchor-protocol/anchor.js/dist"
 import { GlobalDependency } from "@terra-dev/broadcastable-operation/global"
 import { QueryDependencyProvider } from "../packages/@anchor-protocol/queries"
 import { BankProvider } from "../contexts/bank"
@@ -55,6 +55,7 @@ export const columbusContractAddresses: AddressMap = {
   community: "terra12wk8dey0kffwp27l5ucfumczlsc9aned8rqueg",
   staking: "terra1897an2xux840p9lrh6py3ryankc6mspw49xse3",
   ANC: "terra14z56l0fp2lsf86zy3hty2z47ezkhnthtr9yq76",
+  MIR: "terra15gwkyepfc6xgca5t5zefzwy42uts8l2m4g40k6",
   airdrop: "terra146ahqn6d3qgdvmj8cj96hh03dzmeedhsf0kxqm",
   team: "terra1pm54pmw3ej0vfwn3gtn6cdmaqxt0x37e9jt0za",
   vesting: "terra10evq9zxk2m86n3n3xnpw28jpqwp628c6dzuq42",

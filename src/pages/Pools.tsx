@@ -15,6 +15,9 @@ export enum poolName {
   T7UST = "UST - 7d Lottery",
   T14UST = "UST - 14d Lottery",
   T21UST = "UST - 21d Lottery",
+  T21LUNA = "LUNA - 21d Lottery",
+  T7ANC = "ANC - 7d Lottery",
+  T7MIR = "MIR - 7d Lottery",
 }
 
 export const menu: Record<MenuKey, RouteProps> = {

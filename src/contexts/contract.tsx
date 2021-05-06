@@ -1,5 +1,12 @@
-import type { AddressMap, AddressProvider } from "@anchor-protocol/anchor.js"
-import { ContractAddress, CW20Addr, HumanAddr } from "@anchor-protocol/types"
+import type {
+  AddressProvider,
+  AddressMap,
+} from "../packages/@anchor-protocol/anchor.js/dist"
+import {
+  ContractAddress,
+  CW20Addr,
+  HumanAddr,
+} from "../packages/@anchor-protocol/types"
 import type { ReactNode } from "react"
 import { Consumer, Context, createContext, useContext, useMemo } from "react"
 
@@ -79,6 +86,7 @@ export function createContractAddress(
       bLuna: addressProvider.blunaToken("") as CW20Addr,
       aUST: addressProvider.aTerra("") as CW20Addr,
       ANC: addressProvider.ANC() as CW20Addr,
+      MIR: addressProvider.MIR() as CW20Addr,
       AncUstLP: addressProvider.terraswapAncUstLPToken() as CW20Addr,
       bLunaLunaLP: addressProvider.terraswapblunaLunaLPToken("") as CW20Addr,
     },

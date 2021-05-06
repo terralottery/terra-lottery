@@ -1,4 +1,5 @@
 import type {
+  ContractAddress,
   uANC,
   uAncUstLP,
   uaUST,
@@ -15,6 +16,11 @@ import { useContractAddress } from "../../contexts/contract"
 import { MappedQueryResult } from "./types"
 import { useRefetch } from "./useRefetch"
 import { useUserWallet } from "../../packages/@anchor-protocol/wallet-provider"
+import { NominalType } from "@anchor-protocol/types/common"
+import { CW20Addr, HumanAddr } from "@anchor-protocol/types/contracts/common"
+
+export declare type uMIR<T = string> = T & NominalType<"umir">
+export declare type MIR<T = string> = T & NominalType<"mir">
 
 export interface RawData {
   bankBalances: {
@@ -33,6 +39,10 @@ export interface RawData {
     Result: string
   }
 
+  uMIRBalance: {
+    Result: string
+  }
+
   uAncUstLPBalance: {
     Result: string
   }
@@ -48,6 +58,7 @@ export interface Data {
   ubLuna: ubLuna<string>
   uaUST: uaUST<string>
   uANC: uANC<string>
+  uMIR: uMIR<string>
   uAncUstLP: uAncUstLP<string>
   ubLunaLunaLP: ubLunaLunaLP<string>
 }
@@ -69,6 +80,9 @@ export const dataMap = createMap<RawData, Data>({
   },
   uANC: (_, { uANCBalance }) => {
     return JSON.parse(uANCBalance.Result).balance as uANC
+  },
+  uMIR: (_, { uMIRBalance }) => {
+    return JSON.parse(uMIRBalance.Result).balance as uMIR
   },
   uAncUstLP: (_, { uAncUstLPBalance }) => {
     return JSON.parse(uAncUstLPBalance.Result).balance as uAncUstLP
@@ -95,6 +109,9 @@ export const mockupData: Mapped<RawData, Data> = {
     uANCBalance: {
       Result: "",
     },
+    uMIRBalance: {
+      Result: "",
+    },
     uAncUstLPBalance: {
       Result: "",
     },
@@ -107,6 +124,7 @@ export const mockupData: Mapped<RawData, Data> = {
   uLuna: "0" as uLuna,
   ubLuna: "0" as ubLuna,
   uANC: "0" as uANC,
+  uMIR: "0" as uMIR,
   uAncUstLP: "0" as uAncUstLP,
   ubLunaLunaLP: "0" as ubLunaLunaLP,
 }
@@ -119,6 +137,8 @@ export interface RawVariables {
   aTokenBalanceQuery: string
   ANCTokenAddress: string
   ANCTokenBalanceQuery: string
+  MIRTokenAddress: string
+  MIRTokenBalanceQuery: string
   AncUstLPTokenAddress: string
   AncUstLPTokenBalanceQuery: string
   bLunaLunaLPTokenAddress: string
@@ -130,6 +150,7 @@ export interface Variables {
   bAssetTokenAddress: string
   aTokenAddress: string
   ANCTokenAddress: string
+  MIRTokenAddress: string
   AncUstLPTokenAddress: string
   bLunaLunaLPTokenAddress: string
 }
@@ -139,6 +160,7 @@ export function mapVariables({
   bAssetTokenAddress,
   aTokenAddress,
   ANCTokenAddress,
+  MIRTokenAddress,
   AncUstLPTokenAddress,
   bLunaLunaLPTokenAddress,
 }: Variables): RawVariables {
@@ -158,6 +180,12 @@ export function mapVariables({
     }),
     ANCTokenAddress,
     ANCTokenBalanceQuery: JSON.stringify({
+      balance: {
+        address: walletAddress,
+      },
+    }),
+    MIRTokenAddress,
+    MIRTokenBalanceQuery: JSON.stringify({
       balance: {
         address: walletAddress,
       },
@@ -186,6 +214,8 @@ export const query = gql`
     $aTokenBalanceQuery: String!
     $ANCTokenAddress: String!
     $ANCTokenBalanceQuery: String!
+    $MIRTokenAddress: String!
+    $MIRTokenBalanceQuery: String!
     $AncUstLPTokenAddress: String!
     $AncUstLPTokenBalanceQuery: String!
     $bLunaLunaLPTokenAddress: String!
@@ -219,6 +249,14 @@ export const query = gql`
     uANCBalance: WasmContractsContractAddressStore(
       ContractAddress: $ANCTokenAddress
       QueryMsg: $ANCTokenBalanceQuery
+    ) {
+      Result
+    }
+
+    # umir
+    uMIRBalance: WasmContractsContractAddressStore(
+      ContractAddress: $MIRTokenAddress
+      QueryMsg: $MIRTokenBalanceQuery
     ) {
       Result
     }
@@ -258,11 +296,13 @@ export function useUserBalances(): MappedQueryResult<
       bAssetTokenAddress: cw20.bLuna,
       aTokenAddress: cw20.aUST,
       ANCTokenAddress: cw20.ANC,
+      MIRTokenAddress: cw20.MIR,
       AncUstLPTokenAddress: cw20.AncUstLP,
       bLunaLunaLPTokenAddress: cw20.bLunaLunaLP,
     })
   }, [
     cw20.ANC,
+    cw20.MIR,
     cw20.AncUstLP,
     cw20.aUST,
     cw20.bLuna,
