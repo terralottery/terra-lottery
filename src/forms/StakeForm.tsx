@@ -4,14 +4,9 @@ import { LP } from "../constants"
 import { gt } from "../libs/math"
 import { formatAsset, lookup, toAmount } from "../libs/parse"
 import useForm from "../libs/useForm"
-import { validate as v, placeholder, step } from "../libs/formHelpers"
+import { validate as v, placeholder, step, toBase64 } from "../libs/formHelpers"
 import { renderBalance } from "../libs/formHelpers"
-import {
-  useContractsAddress,
-  useContract,
-  useRefetch,
-  useWallet,
-} from "../hooks"
+import { useContractsAddress, useRefetch, useWallet } from "../hooks"
 import { BalanceKey } from "../hooks/contractKeys"
 
 import FormGroup from "../components/FormGroup"
@@ -34,10 +29,9 @@ interface Props {
   tab: Tab
   message: {}
   tokenSymbol?: string
-  contract: string
+  contracts: string[]
   balances: string[]
 }
-
 const StakeForm = ({
   poolName,
   type,
@@ -45,7 +39,7 @@ const StakeForm = ({
   lockDuration,
   tab,
   message,
-  contract,
+  contracts,
   tokenSymbol,
   coin,
   balances,
@@ -56,7 +50,7 @@ const StakeForm = ({
   }[type as Type]
 
   /* context */
-  const { contracts, getSymbol } = useContractsAddress()
+  const { getSymbol } = useContractsAddress()
   useRefetch([balanceKey, BalanceKey.TOKEN])
 
   const balance = type === Type.STAKE ? balances[0] : balances[1]
@@ -115,16 +109,19 @@ const StakeForm = ({
   /* submit */
   const { address: sender } = useWallet()
   const newContractMsg = useNewContractMsg()
-  const assetToken = { asset_token: coin }
   const data = {
     [Type.STAKE]: [
-      new MsgExecuteContract(sender, contract, message, [
+      new MsgExecuteContract(sender, contracts[0], message, [
         new Coin(coin, amount),
       ]),
     ],
     [Type.UNSTAKE]: [
-      newContractMsg(contracts["staking"], {
-        unbond: { ...assetToken, amount },
+      newContractMsg(contracts[1], {
+        send: {
+          amount,
+          contract: contracts[0],
+          msg: toBase64({ redeem_stable: {} }),
+        },
       }),
     ],
   }[type as Type]
@@ -146,6 +143,7 @@ const StakeForm = ({
     disabled,
     data,
     parseTx,
+    type,
   }
 
   return (

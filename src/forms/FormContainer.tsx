@@ -25,6 +25,7 @@ import { useBank } from "../contexts/bank"
 import { uUST } from "@anchor-protocol/types"
 import type { UST } from "@anchor-protocol/types"
 import useFee from "../graphql/useFee"
+import { Type } from "../pages/Pools"
 
 interface Props {
   data: Msg[]
@@ -39,6 +40,7 @@ interface Props {
   /** Form feedback */
   messages?: ReactNode[]
   value?: string
+  type?: Type
 
   /** Submit disabled */
   disabled?: boolean
@@ -57,7 +59,7 @@ interface Props {
 }
 
 export const FormContainer = ({ data: msgs, memo, ...props }: Props) => {
-  const { contents, messages, label, tab, children, value } = props
+  const { contents, messages, label, tab, children, value, type } = props
   const { attrs, pretax, deduct, parseTx = () => [] } = props
 
   /* context */
@@ -73,7 +75,7 @@ export const FormContainer = ({ data: msgs, memo, ...props }: Props) => {
   const fixedGas = 250000 as uUST<number>
   const depositAmount = value as UST
   const bank = useBank()
-  const transactionFee = useMemo(
+  let transactionFee = useMemo(
     () => depositTxFee(depositAmount, bank, fixedGas),
     [bank, depositAmount, fixedGas]
   )
@@ -106,7 +108,10 @@ export const FormContainer = ({ data: msgs, memo, ...props }: Props) => {
     const response = await extension.post(
       { msgs, memo },
       {
-        amount: Math.ceil(Number(transactionFee!.toString())),
+        amount:
+          type === Type.STAKE
+            ? Math.ceil(Number(transactionFee!.toString()))
+            : 250000,
         gas: gas,
         gasPrice: gasPrice,
         tax: !deduct ? tax : undefined,
@@ -143,7 +148,7 @@ export const FormContainer = ({ data: msgs, memo, ...props }: Props) => {
 
     const txFee = (
       <Count symbol={UUSD} dp={3}>
-        {transactionFee?.toString() ?? "0"}
+        {type === Type.STAKE ? transactionFee?.toString() ?? "0" : "250000"}
       </Count>
     )
 

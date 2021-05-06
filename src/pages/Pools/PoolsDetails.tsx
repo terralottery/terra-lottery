@@ -14,7 +14,10 @@ const PoolsDetails = () => {
   const tab = { tabs: [Type.STAKE, Type.UNSTAKE], current: type }
   const bank = useBank()
   let name = poolName.T7UST
-  let contractAddress = columbusContractAddresses.mmMarket
+  let contractAddresses = [
+    columbusContractAddresses.mmMarket,
+    columbusContractAddresses.aTerra,
+  ]
   let tokenSymbol = UST
   let coin = UUSD
   let poolToken = T7UST
@@ -30,28 +33,16 @@ const PoolsDetails = () => {
   switch (token) {
     case "t14ust":
       name = poolName.T14UST
-      contractAddress = columbusContractAddresses.mmMarket
-      tokenSymbol = UST
-      coin = UUSD
       poolToken = T14UST
       lockDuration = "14 days"
       balances = [bank.userBalances.uUSD.toString(), "0"]
-      message = {
-        deposit_stable: {},
-      }
       break
 
     case "t21ust":
       name = poolName.T21UST
-      contractAddress = columbusContractAddresses.mmMarket
-      tokenSymbol = UST
-      coin = UUSD
       poolToken = T21UST
       lockDuration = "21 days"
       balances = [bank.userBalances.uUSD.toString(), "0"]
-      message = {
-        deposit_stable: {},
-      }
       break
   }
 
@@ -66,7 +57,7 @@ const PoolsDetails = () => {
           coin={coin}
           stakedToken={poolToken}
           tokenSymbol={tokenSymbol}
-          contract={contractAddress}
+          contracts={contractAddresses}
           lockDuration={lockDuration}
           message={message}
           tab={tab}
