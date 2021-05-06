@@ -25,6 +25,7 @@ interface Props {
   type: Type
   token: string
   stakedToken: string
+  lockDuration: string
   tab: Tab
   tokenSymbol?: string
   gov?: boolean
@@ -36,6 +37,7 @@ const StakeForm = ({
   type,
   token,
   stakedToken,
+  lockDuration,
   tab,
   gov,
   contract,
@@ -113,14 +115,14 @@ const StakeForm = ({
 
   /* submit */
   const newContractMsg = useNewContractMsg()
-  const { lpToken } = whitelist[token] ?? {}
+  const { ticketToken } = whitelist[token] ?? {}
   const assetToken = { asset_token: token }
   const data = {
     [Type.STAKE]: [
-      newContractMsg(lpToken, {
+      newContractMsg(ticketToken, {
         send: {
           amount,
-          contract: contracts["staking"],
+          contract: contract,
           msg: toBase64({ bond: assetToken }),
         },
       }),
@@ -145,8 +147,15 @@ const StakeForm = ({
     <FormContainer {...container}>
       <FormGroup {...fields[Key.value]} />
 
-      {gov && type === Type.STAKE && (
-        <FormFeedback help>{Tooltip.My.GovReward}</FormFeedback>
+      {type === Type.UNSTAKE ? (
+        <FormFeedback help>{Tooltip.My.UnlockedTickets}</FormFeedback>
+      ) : (
+        <FormFeedback help>
+          {Tooltip.My.TicketLockDuration.replaceAll(
+            "{{token}}",
+            tokenSymbol ?? "LP"
+          ).replaceAll("{{lockDuration}}", lockDuration)}
+        </FormFeedback>
       )}
     </FormContainer>
   )

@@ -78,9 +78,7 @@ export const FormContainer = ({ data: msgs, memo, ...props }: Props) => {
       : undefined
 
   /* confirm */
-  const [confirming, setConfirming] = useState(false)
-  const confirm = () => (hasAgreed ? submit() : setConfirming(true))
-  const cancel = () => setConfirming(false)
+  const confirm = () => hasAgreed && submit()
 
   /* submit */
   const [submitted, setSubmitted] = useState(false)
@@ -101,7 +99,6 @@ export const FormContainer = ({ data: msgs, memo, ...props }: Props) => {
 
   /* reset */
   const reset = () => {
-    setConfirming(false)
     setSubmitted(false)
     setResponse(undefined)
   }

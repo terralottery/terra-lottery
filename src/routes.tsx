@@ -29,8 +29,8 @@ export const menu: Dictionary<RouteProps> = {
 
   // Menu
   [MenuKey.INFO]: { path: "/info", component: Info },
-  [MenuKey.MY]: { path: "/my", component: My },
   [MenuKey.POOLS]: { path: "/pools", component: Pools },
+  [MenuKey.MY]: { path: "/my", component: My },
 
   // For developers
   data: { path: "/data", component: Data },

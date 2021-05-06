@@ -8,7 +8,7 @@ import { AUST, T14UST, T21UST, UST, UUSD } from "../../constants"
 import { columbusContractAddresses } from "../AppProviders"
 
 const PoolsDetails = () => {
-  const { id } = useParams<{ id: string }>()
+  const { token } = useParams<{ token: string }>()
   const { hash: type } = useHash<Type>(Type.STAKE)
   const tab = { tabs: [Type.STAKE, Type.UNSTAKE], current: type }
   let name = poolName.T7UST
@@ -16,14 +16,16 @@ const PoolsDetails = () => {
   let tokenSymbol = UST
   let stakeAddress = UUSD
   let poolToken = AUST
+  let lockDuration = "7 days"
 
-  switch (id) {
+  switch (token) {
     case "t14ust":
       name = poolName.T14UST
       contractAddress = columbusContractAddresses.mmMarket
       tokenSymbol = UST
       stakeAddress = UUSD
       poolToken = T14UST
+      lockDuration = "14 days"
       break
 
     case "t21ust":
@@ -32,6 +34,7 @@ const PoolsDetails = () => {
       tokenSymbol = UST
       stakeAddress = UUSD
       poolToken = T21UST
+      lockDuration = "21 days"
       break
   }
 
@@ -47,6 +50,7 @@ const PoolsDetails = () => {
           stakedToken={poolToken}
           tokenSymbol={tokenSymbol}
           contract={contractAddress}
+          lockDuration={lockDuration}
           tab={tab}
           key={type}
         />

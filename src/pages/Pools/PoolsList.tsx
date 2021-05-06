@@ -45,7 +45,7 @@ const PoolsList = () => {
       apy: ticketApy,
       to: `${url}/t7ust`,
       nextDraw: getNextDraw("7d"),
-      jackpot: dashboard?.totalValueLocked,
+      jackpot: dashboard?.latest24h?.feeVolume ?? "0",
       tickets: find(BalanceKey.TOKEN, getToken(AUST)),
     },
     {
@@ -56,7 +56,7 @@ const PoolsList = () => {
       apy: ticketApy,
       to: `${url}/t14ust`,
       nextDraw: getNextDraw("14d"),
-      jackpot: dashboard?.totalValueLocked,
+      jackpot: dashboard?.latest24h?.mirVolume ?? "0",
       tickets: find(BalanceKey.TOKEN, getToken(T14UST)),
     },
     {
@@ -67,7 +67,7 @@ const PoolsList = () => {
       apy: ticketApy,
       to: `${url}/t21ust`,
       nextDraw: getNextDraw("21d"),
-      jackpot: dashboard?.totalValueLocked,
+      jackpot: dashboard?.latest24h?.volume ?? "0",
       tickets: find(BalanceKey.TOKEN, getToken(T21UST)),
     },
   ]

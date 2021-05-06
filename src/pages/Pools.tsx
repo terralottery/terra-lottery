@@ -25,7 +25,7 @@ export const menu: Record<MenuKey, RouteProps> = {
 }
 
 export enum Type {
-  "STAKE" = "stake",
+  "STAKE" = "buy",
   "UNSTAKE" = "withdraw",
 }
 

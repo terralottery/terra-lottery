@@ -16,7 +16,6 @@ import { DlFooter } from "./Dl"
 const cx = classNames.bind(styles)
 
 export interface Props {
-  lpToken: string
   symbol: string
   name?: string
 
@@ -27,7 +26,7 @@ export interface Props {
   to: string
 }
 
-const StakeItemCard: FC<Props> = ({ lpToken, symbol, name, to, ...item }) => {
+const StakeItemCard: FC<Props> = ({ symbol, name, to, ...item }) => {
   const { apy, children, nextDraw, jackpot, tickets } = item
   const participating = Number(tickets) > 0
   const badges = [

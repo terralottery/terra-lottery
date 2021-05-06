@@ -14,7 +14,7 @@ interface ListedItem {
   name: string
   token: string
   pair: string
-  lpToken: string
+  ticketToken: string
   status: "LISTED" | "DELISTED"
 }
 

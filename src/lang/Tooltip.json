@@ -48,7 +48,8 @@
     "APR": "Annualized staking return",
     "Staked": "Quantity of staked LP tokens for the corresponding asset liquidity pool",
     "Reward": "Quantity of claimable rewards for the corresponding staking position",
-    "GovReward": "Protocol fee paid from withdrawing collateral is distributed to MIR stakers and increases staked MIR",
+    "TicketLockDuration": "Be aware, that your {{token}} will be locked for the duration of one drawing intervall in this case: {{lockDuration}}",
+    "UnlockedTickets": "You can only withdraw unlocked tickets.",
 
     "LimitOrders": "List of trade orders to be executed at the limit price",
     "LimitPrice": "Price at which the order will be executed",

@@ -31,7 +31,10 @@ export function currentAPY(
 
 const DashboardHeader = ({ network, ...props }: Props) => {
   const { blocksPerYear } = useConstants()
-  const { totalValueLocked } = props
+  const { latest24h } = props
+  const jackpotSizeT7ust = latest24h?.feeVolume ?? "0"
+  const jackpotSizeT14ust = latest24h?.mirVolume ?? "0"
+  const jackpotSizeT21ust = latest24h?.volume ?? "0"
   const sevenDayEnd = getNextDraw("7d")
   const fourteenDayEnd = getNextDraw("14d")
   const twentyOneDayEnd = getNextDraw("21d")
@@ -74,7 +77,7 @@ const DashboardHeader = ({ network, ...props }: Props) => {
             }
           >
             <Count symbol={UUSD} integer>
-              {totalValueLocked}
+              {jackpotSizeT7ust}
             </Count>
           </Summary>
           <Legend title="Next draw in:">
@@ -91,7 +94,7 @@ const DashboardHeader = ({ network, ...props }: Props) => {
             }
           >
             <Count symbol={UUSD} integer>
-              {totalValueLocked}
+              {jackpotSizeT14ust}
             </Count>
           </Summary>
           <Legend title="Next draw in:">
@@ -108,7 +111,7 @@ const DashboardHeader = ({ network, ...props }: Props) => {
             }
           >
             <Count symbol={UUSD} integer>
-              {totalValueLocked}
+              {jackpotSizeT21ust}
             </Count>
           </Summary>
 
