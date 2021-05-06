@@ -6,15 +6,20 @@ import { formatAsset, lookup, toAmount } from "../libs/parse"
 import useForm from "../libs/useForm"
 import { validate as v, placeholder, step } from "../libs/formHelpers"
 import { renderBalance } from "../libs/formHelpers"
-import { useContractsAddress, useContract, useRefetch } from "../hooks"
+import {
+  useContractsAddress,
+  useContract,
+  useRefetch,
+  useWallet,
+} from "../hooks"
 import { BalanceKey } from "../hooks/contractKeys"
 
 import FormGroup from "../components/FormGroup"
 import FormFeedback from "../components/FormFeedback"
 import { Type } from "../pages/Pools"
 import useStakeReceipt from "./receipts/useStakeReceipt"
-import { toBase64 } from "../libs/formHelpers"
 import FormContainer from "./FormContainer"
+import { Coin, MsgExecuteContract } from "@terra-money/terra.js"
 
 enum Key {
   value = "value",
@@ -23,25 +28,27 @@ enum Key {
 interface Props {
   poolName: string
   type: Type
-  token: string
+  coin: string
   stakedToken: string
   lockDuration: string
   tab: Tab
+  message: {}
   tokenSymbol?: string
-  gov?: boolean
-  contract?: string
+  contract: string
+  balances: string[]
 }
 
 const StakeForm = ({
   poolName,
   type,
-  token,
   stakedToken,
   lockDuration,
   tab,
-  gov,
+  message,
   contract,
   tokenSymbol,
+  coin,
+  balances,
 }: Props) => {
   const balanceKey = {
     [Type.STAKE]: BalanceKey.TOKEN,
@@ -49,23 +56,15 @@ const StakeForm = ({
   }[type as Type]
 
   /* context */
-  const { contracts, whitelist, getSymbol, getToken } = useContractsAddress()
-  const { find } = useContract()
+  const { contracts, getSymbol } = useContractsAddress()
   useRefetch([balanceKey, BalanceKey.TOKEN])
 
-  const getMax = () => {
-    const balance =
-      type === Type.UNSTAKE
-        ? find(balanceKey, getToken(stakedToken))
-        : find(balanceKey, token)
-
-    return balance
-  }
+  const balance = type === Type.STAKE ? balances[0] : balances[1]
 
   /* form:validate */
   const validate = ({ value }: Values<Key>) => {
-    const symbol = getSymbol(token)
-    return { [Key.value]: v.amount(value, { symbol, max: getMax() }) }
+    const symbol = getSymbol(coin)
+    return { [Key.value]: v.amount(value, { symbol, max: balance }) }
   }
 
   /* form:hook */
@@ -74,10 +73,10 @@ const StakeForm = ({
   const { values, setValue, getFields, attrs, invalid } = form
   const { value } = values
   const amount = toAmount(value)
-  const symbol = getSymbol(token)
+  const symbol = getSymbol(coin)
 
   /* render:form */
-  const max = getMax()
+  const max = balance
   const fields = getFields({
     [Key.value]: {
       label: "Amount",
@@ -102,30 +101,26 @@ const StakeForm = ({
       ? [
           {
             title: `${poolName} Tickets`,
-            content: formatAsset(max, "Tickets"),
+            content: formatAsset(amount, getSymbol(stakedToken)),
           },
         ]
       : [
           {
             title: `${poolName} Tickets`,
-            content: formatAsset(max, "Tickets"),
+            content: formatAsset(amount, "Tickets"),
           },
         ]
     : []
 
   /* submit */
+  const { address: sender } = useWallet()
   const newContractMsg = useNewContractMsg()
-  const { ticketToken } = whitelist[token] ?? {}
-  const assetToken = { asset_token: token }
+  const assetToken = { asset_token: coin }
   const data = {
     [Type.STAKE]: [
-      newContractMsg(ticketToken, {
-        send: {
-          amount,
-          contract: contract,
-          msg: toBase64({ bond: assetToken }),
-        },
-      }),
+      new MsgExecuteContract(sender, contract, message, [
+        new Coin(coin, amount),
+      ]),
     ],
     [Type.UNSTAKE]: [
       newContractMsg(contracts["staking"], {
@@ -139,9 +134,19 @@ const StakeForm = ({
   const disabled = invalid
 
   /* result */
-  const parseTx = useStakeReceipt(!!gov)
+  const parseTx = useStakeReceipt()
 
-  const container = { tab, attrs, contents, messages, disabled, data, parseTx }
+  const container = {
+    tab,
+    attrs,
+    contents,
+    messages,
+    amount,
+    value,
+    disabled,
+    data,
+    parseTx,
+  }
 
   return (
     <FormContainer {...container}>

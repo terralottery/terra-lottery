@@ -13,12 +13,12 @@ type Formatter = (
 const rm = BigNumber.ROUND_DOWN
 
 export const dp = (symbol?: string) =>
-  !symbol || lookupSymbol(symbol) === "UST" ? 3 : 6
+  !symbol || lookupSymbol(symbol) === "UST" ? 3 : 0
 
 export const validateDp = (value: string, symbol?: string) =>
   new BigNumber(value).times(new BigNumber(10).pow(dp(symbol))).isInteger()
 
-export const decimal = (value = "0", dp = 6) =>
+export const decimal = (value = "0", dp = 3) =>
   new BigNumber(value).decimalPlaces(dp, rm).toString()
 
 export const lookup: Formatter = (amount = "0", symbol, config) => {
@@ -35,12 +35,13 @@ export const lookup: Formatter = (amount = "0", symbol, config) => {
     .toString()
 }
 
-export const lookupSymbol = (symbol?: string) =>
-  symbol === "uluna"
+export const lookupSymbol = (symbol?: string) => {
+  return symbol === "uluna"
     ? "Luna"
     : symbol?.startsWith("u")
     ? symbol.slice(1, 3).toUpperCase() + "T"
     : symbol ?? ""
+}
 
 export const format: Formatter = (amount, symbol, config) => {
   const value = new BigNumber(lookup(amount, symbol, config))

@@ -6,6 +6,8 @@ import Tooltip from "./Tooltip"
 import ExtLink from "./ExtLink"
 import LinkButton from "./LinkButton"
 import styles from "./ConnectedInfo.module.scss"
+import { useBank } from "../contexts/bank"
+import { format } from "../libs/parse"
 
 interface Props {
   address: string
@@ -19,6 +21,14 @@ interface Props {
 const ConnectedInfo = (props: Props) => {
   const { address, truncated, link, footer, disconnect, close } = props
   const { copy, copied, reset } = useCopyAddress(address)
+  const bank = useBank()
+
+  const balances = [
+    { symbol: "UST", balance: bank.userBalances.uUSD.toString() },
+    { symbol: "t7UST", balance: bank.userBalances.uaUST.toString() },
+    { symbol: "t14UST", balance: "0" },
+    { symbol: "t21UST", balance: "0" },
+  ]
 
   return (
     <div className={styles.wallet}>
@@ -35,6 +45,16 @@ const ConnectedInfo = (props: Props) => {
         )}
       </header>
 
+      <ul className={styles.balances}>
+        {balances.map((balance) => (
+          <li className={styles.item} key={balance.symbol}>
+            <span className={styles.label}>{balance.symbol}</span>
+            <span className={styles.value}>
+              {format(balance.balance, balance.symbol)}
+            </span>
+          </li>
+        ))}
+      </ul>
       <section className={styles.actions}>
         <div id="parent">
           <Tooltip

@@ -1,7 +1,7 @@
 import { useRouteMatch } from "react-router-dom"
 import Page from "../../components/Page"
 import ClaimForm from "../../forms/ClaimForm"
-import StakeDetailsHeader from "../../components/StakeDetailsHeader"
+import PoolDetailsHeader from "../../components/PoolDetailsHeader"
 import { useContractsAddress } from "../../hooks"
 import { MenuKey } from "../Pools"
 
@@ -12,7 +12,7 @@ const Claim = () => {
   const { getSymbol } = useContractsAddress()
   const symbol = getSymbol(token)
   const title = symbol ? (
-    <StakeDetailsHeader>{symbol}</StakeDetailsHeader>
+    <PoolDetailsHeader>{symbol}</PoolDetailsHeader>
   ) : (
     MenuKey.CLAIMALL
   )

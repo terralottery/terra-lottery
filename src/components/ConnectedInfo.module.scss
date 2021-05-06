@@ -24,6 +24,22 @@
   font-size: 10px;
 }
 
+.balances {
+  width: 100%;
+  margin: 0 0 20px 0;
+  font-size: 14px;
+
+  .item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0 0;
+    margin: 0 0 5px;
+    &:not(:first-child) {
+      border-top: $border;
+    }
+  }
+}
+
 .actions {
   @include flex(space-between);
   font-size: 12px;

@@ -23,7 +23,6 @@ const TxInfo = ({ txInfo, parser }: Props) => {
       content: <TxHash>{hash}</TxHash>,
     },
   ]
-
   return (
     <>
       {receipt.map(

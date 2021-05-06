@@ -1,9 +1,9 @@
 import { useRouteMatch } from "react-router-dom"
-import { useContract, useContractsAddress, useRefetch } from "../../hooks"
+import { useRefetch } from "../../hooks"
 import { BalanceKey } from "../../hooks/contractKeys"
 
 import Grid from "../../components/Grid"
-import StakeItemCard from "../../components/StakeItemCard"
+import PoolItemCard from "../../components/PoolItemCard"
 import LoadingTitle from "../../components/LoadingTitle"
 import PoolsListTitle from "./PoolsListTitle"
 import styles from "./PoolsList.module.scss"
@@ -15,7 +15,7 @@ import { useConstants } from "../../contexts/contants"
 import { getNextDraw } from "../../components/Countdown"
 import useDashboard, { StatsNetwork } from "../../statistics/useDashboard"
 import { poolName } from "../Pools"
-import { AUST, T14UST, T21UST } from "../../constants"
+import { useBank } from "../../contexts/bank"
 
 const PoolsList = () => {
   const keys = [BalanceKey.LPSTAKED, BalanceKey.LPSTAKABLE]
@@ -26,13 +26,12 @@ const PoolsList = () => {
   const {
     data: { marketStatus },
   } = useInterest()
-  const { getToken } = useContractsAddress()
-  const { find } = useContract()
   const apy = useMemo(() => currentAPY(marketStatus, blocksPerYear), [
     blocksPerYear,
     marketStatus,
   ])
 
+  const bank = useBank()
   useRefetch([BalanceKey.TOKEN, BalanceKey.TOKEN])
   const ticketApy = Number(big(apy).toFixed()) / 2
 
@@ -46,7 +45,7 @@ const PoolsList = () => {
       to: `${url}/t7ust`,
       nextDraw: getNextDraw("7d"),
       jackpot: dashboard?.latest24h?.feeVolume ?? "0",
-      tickets: find(BalanceKey.TOKEN, getToken(AUST)),
+      tickets: bank.userBalances.uaUST,
     },
     {
       lpToken: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
@@ -57,7 +56,7 @@ const PoolsList = () => {
       to: `${url}/t14ust`,
       nextDraw: getNextDraw("14d"),
       jackpot: dashboard?.latest24h?.mirVolume ?? "0",
-      tickets: find(BalanceKey.TOKEN, getToken(T14UST)),
+      tickets: "0",
     },
     {
       lpToken: "terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu",
@@ -68,7 +67,7 @@ const PoolsList = () => {
       to: `${url}/t21ust`,
       nextDraw: getNextDraw("21d"),
       jackpot: dashboard?.latest24h?.volume ?? "0",
-      tickets: find(BalanceKey.TOKEN, getToken(T21UST)),
+      tickets: "0",
     },
   ]
 
@@ -80,7 +79,7 @@ const PoolsList = () => {
 
       <Grid wrap={3}>
         {pricePools.map((item) => (
-          <StakeItemCard {...item} key={item.id} />
+          <PoolItemCard {...item} key={item.id} />
         ))}
       </Grid>
     </article>

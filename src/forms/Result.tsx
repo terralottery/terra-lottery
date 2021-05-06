@@ -74,7 +74,6 @@ const Result = ({ success, result, error, ...props }: Props) => {
     result?.raw_log ||
     error?.message ||
     (error?.code === 1 && MESSAGE.Result.DENIED)
-
   const content = {
     [STATUS.SUCCESS]: txInfo && <TxInfo txInfo={txInfo} parser={parseTx} />,
     [STATUS.LOADING]: null,

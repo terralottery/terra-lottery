@@ -1,16 +1,15 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { ReactNode, HTMLAttributes, FormEvent } from "react"
 import { Msg } from "@terra-money/terra.js"
 
 import MESSAGE from "../lang/MESSAGE.json"
 import Tooltip from "../lang/Tooltip.json"
 import { UUSD } from "../constants"
-import { gt, plus, sum } from "../libs/math"
+import { gt, sum } from "../libs/math"
 import useHash from "../libs/useHash"
 import extension, { PostResponse } from "../terra/extension"
 import { useContract, useSettings, useWallet } from "../hooks"
 import useTax from "../graphql/useTax"
-import useFee from "../graphql/useFee"
 
 import Container from "../components/Container"
 import Tab from "../components/Tab"
@@ -21,6 +20,11 @@ import Button from "../components/Button"
 import Count from "../components/Count"
 import { TooltipIcon } from "../components/Tooltip"
 import Result from "./Result"
+import { depositTxFee } from "../libs/depositTxFees"
+import { useBank } from "../contexts/bank"
+import { uUST } from "@anchor-protocol/types"
+import type { UST } from "@anchor-protocol/types"
+import useFee from "../graphql/useFee"
 
 interface Props {
   data: Msg[]
@@ -34,6 +38,7 @@ interface Props {
   deduct?: boolean
   /** Form feedback */
   messages?: ReactNode[]
+  value?: string
 
   /** Submit disabled */
   disabled?: boolean
@@ -52,7 +57,7 @@ interface Props {
 }
 
 export const FormContainer = ({ data: msgs, memo, ...props }: Props) => {
-  const { contents, messages, label, tab, children } = props
+  const { contents, messages, label, tab, children, value } = props
   const { attrs, pretax, deduct, parseTx = () => [] } = props
 
   /* context */
@@ -65,12 +70,21 @@ export const FormContainer = ({ data: msgs, memo, ...props }: Props) => {
   const { loading } = result.uusd
 
   /* tax */
+  const fixedGas = 250000 as uUST<number>
+  const depositAmount = value as UST
+  const bank = useBank()
+  const transactionFee = useMemo(
+    () => depositTxFee(depositAmount, bank, fixedGas),
+    [bank, depositAmount, fixedGas]
+  )
+
   const fee = useFee()
+  const { gas, gasPrice } = fee
   const { calcTax, loading: loadingTax } = useTax()
   const tax = pretax ? calcTax(pretax) : "0"
   const uusdAmount = !deduct
-    ? sum([pretax ?? "0", tax, fee.amount])
-    : fee.amount
+    ? sum([pretax ?? "0", tax, transactionFee?.toString() ?? "0"])
+    : transactionFee?.toString() ?? "0"
 
   const invalid =
     address && !loading && !gt(uusd, uusdAmount)
@@ -91,9 +105,13 @@ export const FormContainer = ({ data: msgs, memo, ...props }: Props) => {
 
     const response = await extension.post(
       { msgs, memo },
-      { ...fee, tax: !deduct ? tax : undefined }
+      {
+        amount: Math.ceil(Number(transactionFee!.toString())),
+        gas: gas,
+        gasPrice: gasPrice,
+        tax: !deduct ? tax : undefined,
+      }
     )
-
     setResponse(response)
   }
 
@@ -124,8 +142,8 @@ export const FormContainer = ({ data: msgs, memo, ...props }: Props) => {
         }
 
     const txFee = (
-      <Count symbol={UUSD} dp={6}>
-        {plus(tax, fee.amount)}
+      <Count symbol={UUSD} dp={3}>
+        {transactionFee?.toString() ?? "0"}
       </Count>
     )
 

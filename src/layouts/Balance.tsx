@@ -1,11 +1,11 @@
 import { UUSD } from "../constants"
-import { useContract } from "../hooks"
 import { AccountInfoKey } from "../hooks/contractKeys"
 import Count from "../components/Count"
 import WithResult from "../containers/WithResult"
+import { useBank } from "../contexts/bank"
 
 const Balance = () => {
-  const { uusd } = useContract()
+  const bank = useBank()
   const renderError = () => <p className="red">Error</p>
 
   return (
@@ -14,7 +14,7 @@ const Balance = () => {
       renderError={renderError}
       size={21}
     >
-      <Count symbol={UUSD}>{uusd}</Count>
+      <Count symbol={UUSD}>{bank.userBalances.uUSD.toString()}</Count>
     </WithResult>
   )
 }
