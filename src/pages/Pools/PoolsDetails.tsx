@@ -4,7 +4,19 @@ import Page from "../../components/Page"
 import PoolDetailsHeader from "../../components/PoolDetailsHeader"
 import StakeForm from "../../forms/StakeForm"
 import { poolName, Type } from "../Pools"
-import { T7UST, T14UST, T21UST, UST, UUSD } from "../../constants"
+import {
+  T7UST,
+  T14UST,
+  T21UST,
+  UST,
+  UUSD,
+  T21LUNA,
+  T7ANC,
+  T7MIR,
+  MIR,
+  ULUNA,
+  ANC,
+} from "../../constants"
 import { columbusContractAddresses } from "../AppProviders"
 import { useBank } from "../../contexts/bank"
 
@@ -43,6 +55,33 @@ const PoolsDetails = () => {
       poolToken = T21UST
       lockDuration = "21 days"
       balances = [bank.userBalances.uUSD.toString(), "0"]
+      break
+
+    case "t7mir":
+      name = poolName.T7MIR
+      poolToken = T7MIR
+      lockDuration = "7 days"
+      coin = MIR
+      tokenSymbol = MIR
+      balances = [bank.userBalances.uMIR.toString(), "0"]
+      break
+
+    case "t7anc":
+      name = poolName.T7ANC
+      poolToken = T7ANC
+      coin = ANC
+      tokenSymbol = ANC
+      lockDuration = "7 days"
+      balances = [bank.userBalances.uANC.toString(), "0"]
+      break
+
+    case "t21luna":
+      name = poolName.T21LUNA
+      poolToken = T21LUNA
+      coin = ULUNA
+      tokenSymbol = "LUNA"
+      lockDuration = "21 days"
+      balances = [bank.userBalances.uLuna.toString(), "0"]
       break
   }
 

@@ -12,8 +12,15 @@ type Formatter = (
 
 const rm = BigNumber.ROUND_DOWN
 
-export const dp = (symbol?: string) =>
-  !symbol || lookupSymbol(symbol) === "UST" ? 3 : 0
+export const dp = (symbol?: string) => {
+  return !symbol ||
+    lookupSymbol(symbol) === "UST" ||
+    lookupSymbol(symbol) === "ANC" ||
+    lookupSymbol(symbol) === "LUNA" ||
+    lookupSymbol(symbol) === "MIR"
+    ? 3
+    : 0
+}
 
 export const validateDp = (value: string, symbol?: string) =>
   new BigNumber(value).times(new BigNumber(10).pow(dp(symbol))).isInteger()
@@ -37,7 +44,7 @@ export const lookup: Formatter = (amount = "0", symbol, config) => {
 
 export const lookupSymbol = (symbol?: string) => {
   return symbol === "uluna"
-    ? "Luna"
+    ? "LUNA"
     : symbol?.startsWith("u")
     ? symbol.slice(1, 3).toUpperCase() + "T"
     : symbol ?? ""

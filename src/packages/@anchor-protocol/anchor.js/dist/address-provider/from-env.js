@@ -69,7 +69,7 @@ class AddressProviderFromEnvVar {
     return getFromEnv(`token`)
   }
   MIR() {
-    return getFromEnv(`token`)
+    return getFromEnv(`mirtoken`)
   }
   airdrop() {
     return getFromEnv(`airdrop`)

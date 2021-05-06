@@ -24,6 +24,7 @@ exports.contractAddresses = {
   community: "terra1fslrcskr75ne7ruxm09edf937x3q4wvluree8q",
   staking: "terra17rjwrakf8xdewnu8m0hqfwh4lcl6ajljhv5qq3",
   ANC: "terra1sdvgy8fg76zley8kxautnhc2lhyaj62vkkfm6l",
+  MIR: "terra15gwkyepfc6xgca5t5zefzwy42uts8l2m4g40k6",
   airdrop: "terra1l6c83meglqnhs2xke7cyc7vrywn78h6dsfdp0x",
 }
 //# sourceMappingURL=defualt-addresses.js.map

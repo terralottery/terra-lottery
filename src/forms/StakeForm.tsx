@@ -67,7 +67,7 @@ const StakeForm = ({
   const { values, setValue, getFields, attrs, invalid } = form
   const { value } = values
   const amount = toAmount(value)
-  const symbol = getSymbol(coin)
+  const symbol = Type.UNSTAKE ? stakedToken : coin ?? LP
 
   /* render:form */
   const max = balance
@@ -80,8 +80,8 @@ const StakeForm = ({
         placeholder: placeholder(symbol),
         autoFocus: true,
       },
-      help: renderBalance(max, symbol),
-      unit: type === Type.UNSTAKE ? getSymbol(stakedToken) : tokenSymbol ?? LP,
+      help: renderBalance(max, coin),
+      unit: type === Type.UNSTAKE ? stakedToken : tokenSymbol ?? LP,
       max: gt(max, 0)
         ? () => setValue(Key.value, lookup(max, symbol))
         : undefined,
@@ -95,7 +95,7 @@ const StakeForm = ({
       ? [
           {
             title: `${poolName} Tickets`,
-            content: formatAsset(amount, getSymbol(stakedToken)),
+            content: formatAsset(amount, stakedToken),
           },
         ]
       : [

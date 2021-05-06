@@ -68,7 +68,7 @@ class AddressProviderFromJson {
     return this.data.ANC
   }
   MIR() {
-    return this.data.ANC
+    return this.data.MIR
   }
   airdrop() {
     return this.data.airdrop

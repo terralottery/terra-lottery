@@ -9,7 +9,9 @@ export const BLOCK_TIME = 6500 // 6.5s
 
 /* mirror:unit */
 export const SMALLEST = 1e6
+export const ULUNA = "uluna"
 export const MIR = "MIR"
+export const ANC = "ANC"
 export const UUSD = "uusd"
 export const UST = "UST"
 export const AUST = "aUST"
@@ -17,6 +19,9 @@ export const LP = "LP"
 export const T7UST = "t7UST"
 export const T14UST = "t14UST"
 export const T21UST = "t21UST"
+export const T7MIR = "t7MIR"
+export const T21LUNA = "t21LUNA"
+export const T7ANC = "t7ANC"
 
 /* mirror:configs */
 export const GENESIS = 1607022000000
