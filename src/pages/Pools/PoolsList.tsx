@@ -77,7 +77,7 @@ const PoolsList = () => {
       apy: Number(dashboard?.govAPY) / 2,
       to: `${url}/t7mir`,
       nextDraw: getNextDraw("7d"),
-      jackpot: String(Number(dashboard?.latest24h?.mirVolume) / 2) ?? "0",
+      jackpot: String(Number(dashboard?.latest24h?.mirVolume) / 11.23) ?? "0",
       tickets: "0",
     },
     {
@@ -88,7 +88,7 @@ const PoolsList = () => {
       apy: 0.0653,
       to: `${url}/t21luna`,
       nextDraw: getNextDraw("21d"),
-      jackpot: dashboard?.latest24h?.volume ?? "0",
+      jackpot: String(Number(dashboard?.latest24h?.feeVolume) / 17.4) ?? "0",
       tickets: "0",
     },
     {
@@ -99,7 +99,7 @@ const PoolsList = () => {
       apy: 0.03435,
       to: `${url}/t7anc`,
       nextDraw: getNextDraw("7d"),
-      jackpot: String(Number(dashboard?.latest24h?.feeVolume) * 0.75) ?? "0",
+      jackpot: String(Number(dashboard?.latest24h?.feeVolume) / 5.4) ?? "0",
       tickets: "0",
     },
   ]

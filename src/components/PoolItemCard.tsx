@@ -10,7 +10,6 @@ import styles from "./PoolItemCard.module.scss"
 import LinkButton from "./LinkButton"
 import Legend from "./Legend"
 import { Countdown } from "./Countdown"
-import { UUSD } from "../constants"
 import { DlFooter } from "./Dl"
 
 const cx = classNames.bind(styles)
@@ -63,7 +62,7 @@ const PoolItemCard: FC<Props> = ({ symbol, name, to, ...item }) => {
             <h1 className={styles.heading}>{name ?? getLpName(symbol)}</h1>
             <h2 className={styles.subheading}>
               Jackpot:{" "}
-              <Count symbol={UUSD} integer>
+              <Count symbol={symbol} integer>
                 {jackpot}
               </Count>
             </h2>
