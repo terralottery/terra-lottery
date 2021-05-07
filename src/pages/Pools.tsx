@@ -6,7 +6,7 @@ import PoolsHome from "./Pools/PoolsHome"
 
 export enum MenuKey {
   INDEX = "Prize Pools",
-  CLAIMALL = "Claim all",
+  CLAIMALL = "Claim Jackpot",
   CLAIMSYMBOL = "Claim",
   DETAILS = "Prize Pool Details",
 }
